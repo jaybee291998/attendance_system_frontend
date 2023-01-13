@@ -1,0 +1,22 @@
+<div>
+    <h1>login</h1>
+    <form action="" ng-submit="vm.login()">
+        <div ng-show="error" ng-bind="error"></div>
+
+        <div>
+            <label for="login__email">Email</label>
+            <input type="text" id="login__email" ng-model="vm.email" placeholder="ex. jaybee291998@gmail.com">
+        </div>
+
+        <div>
+            <label for="login__password">Password</label>
+            <input type="password" id="login__password" ng-model="vm.password" placeholder="ex. live laugh love"> 
+        </div>
+
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <div>
+    </div>
+</div>

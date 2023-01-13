@@ -1,0 +1,25 @@
+<div>
+    <div ng-show="page_error.length < 0">{{page_error}}</div>
+    <div ng-show="error" ng-bind="error"></div>
+    <div ng-show="message" ng-bind="message"></div>
+    <div>
+        <form action="" ng-submit="vm.register()">
+            <div>
+                <label for="register__email">Email</label>
+                <input type="text" id="register__email" ng-model="vm.email">
+            </div>
+
+            <div>
+                <label for="register__password">Password</label>
+                <input type="password" id="register__password" ng-model="vm.password">
+            </div>
+
+            <div>
+                <label for="register__confirm_password">Confirm Password</label>
+                <input type="password" id="register__confirm_password" ng-model="vm.confirmPassword">
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
