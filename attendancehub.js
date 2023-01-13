@@ -3,6 +3,7 @@
 
     angular.module('attendancehub', [
         'ngCookies',
+        'ngMessages',
         'attendancehub.config',
         'attendancehub.routes',
         'attendancehub.authentication',

@@ -1,25 +1,127 @@
-<div>
+<div class="pl-10 pl-10">
     <div ng-show="page_error.length < 0">{{page_error}}</div>
     <div ng-show="error" ng-bind="error"></div>
     <div ng-show="message" ng-bind="message"></div>
-    <div>
-        <form action="" ng-submit="vm.register()">
-            <div>
-                <label for="register__email">Email</label>
-                <input type="text" id="register__email" ng-model="vm.email">
-            </div>
+    <div class="card">
+	    <div class="card-header">
+	        <h5 class="card-title">Registration</h5>
+	    </div>
+        <div class="card-body">
+            <form name="registerForm" novalidate>
+                <div class="form-group row mb-2">
+                  <label for="register__email" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="register__email" placeholder="Email" 
+                    ng-model="vm.email" 
+                    required>
+                  </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                  <label for="register__password" class="col-sm-2 col-form-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="register__password" placeholder="Password" 
+                    ng-model="vm.confirmPassword" 
+                    required>
+                  </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="register__confirm_password" placeholder="Confirm Password" 
+                      ng-model="vm.password" 
+                      required>
+                    </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__first_name" placeholder="first name" 
+                      ng-model="user.first_name" 
+                      required>
+                    </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__last_name" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__last_name" placeholder="last name" 
+                      ng-model="user.last_name" 
+                      required>
+                    </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__middle_name" placeholder="middle name" 
+                      ng-model="user.middle_name" 
+                      required>
+                    </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__age" class="col-sm-2 col-form-label">Age</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__age" placeholder="age" 
+                      ng-model="user.age" 
+                      required>
+                    </div>
+                </div>
+    
+                <div class="form-group row mb-2">
+                    <label for="register__address" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__address" placeholder="address" 
+                      ng-model="user.address" 
+                      required>
+                    </div>
+                </div>
 
-            <div>
-                <label for="register__password">Password</label>
-                <input type="password" id="register__password" ng-model="vm.password">
-            </div>
-
-            <div>
-                <label for="register__confirm_password">Confirm Password</label>
-                <input type="password" id="register__confirm_password" ng-model="vm.confirmPassword">
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
+                <div class="form-group row mb-2">
+                    <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="register__phone" placeholder="phone" 
+                      ng-model="user.phone"
+                       required>
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2" for="register__sex">Sex</label>
+                    <select class="custom-select mr-sm-2" id="register__sex" ng-model="user.sex">
+                      <!-- <option selected>Choose...</option> -->
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                      <option value="O">Other</option>
+                    </select>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="register__year_level">Year Level</label>
+                        <select class="custom-select mr-sm-2" id="register__year_level" ng-model="user.year_level" ng-change="year_select()">
+                          <!-- <option selected>Choose...</option> -->
+                          <option ng-repeat="year_level in year_levels" value="{{year_level.id}}">{{year_level.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="register__section">Section</label>
+                        <select class="custom-select mr-sm-2" id="register__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
+                          <!-- <option selected>Choose...</option> -->
+                          <option ng-repeat="section in valid_sections" value="{{section.id}}">{{section.name}}</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary" ng-click="vm.register()">Sign in</button>
+                  </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

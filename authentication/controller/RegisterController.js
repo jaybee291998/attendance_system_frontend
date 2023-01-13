@@ -20,6 +20,8 @@
             $scope.year_levels = [];
             $scope.sections = [];
             $scope.valid_sections = [];
+            $scope.user_profile = {};
+            $scope.disable_section_selection = true;
 
             Authentication.fetchYearSection()
                 .then(response => {
@@ -27,12 +29,26 @@
                         $scope.year_levels = response.data.year_levels;
                         $scope.sections = response.data.sections;
                         console.log($scope.year_levels);
+                        console.log($scope.sections);
                     }else{
                         $scope.page_error = `There has been an error. Please refresh the page`
                     }
-                })
+                });
+            
+            $scope.year_select = () => {
+                // $scope.user.year_level = parseInt($scope.user.year_level)
+                console.log(typeof $scope.user.year_level);
+                $scope.valid_sections = $scope.sections.filter(section => section.year_level === parseInt($scope.user.year_level))
+                console.log($scope.valid_sections);
+                $scope.disable_section_selection = false;
+            }
+
+            $scope.section_change = () => {
+                
+            }
 
             function register(){
+                console.log($scope.user);
                 if(validateForm()){
                     let p = Authentication.register(vm.email, vm.password);
                     p.then(function(response){
@@ -42,6 +58,8 @@
                         }else{
                             console.log("success");
                             $scope.message = `account with email ${response.data.email}`;
+                            Authentication.login(vm.email, vm.password)
+                            .then(Authentication.updateUserProfile($scope.user));
                         }
                     })
                 } 
@@ -56,5 +74,6 @@
 
                 return isFormValid;
             }
+
         }
 })();

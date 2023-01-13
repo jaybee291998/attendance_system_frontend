@@ -12,6 +12,7 @@
                 login: login,
                 register: register,
                 fetchYearSection: fetchYearSection,
+                updateUserProfile: updateUserProfile,
                 isAuthenticated: isAuthenticated,
                 setAuthenticatedAccount: setAuthenticatedAccount,
                 getAuthenticatedAccount: getAuthenticatedAccount,
@@ -44,7 +45,6 @@
                 }).then(registerSuccessFn, registerErrorFn);
 
                 function registerSuccessFn(data, status, headers, config){
-                    Authentication.login(email, password);
                     return data;
                 }
 
@@ -57,6 +57,11 @@
             function fetchYearSection(){
                 return $http.get(`${myapi_link}/account/year-section/`)
                     .then(response=>response, response=>response)
+            }
+
+            function updateUserProfile(user_profile){
+                return $http.put(`${myapi_link}/account/user-profile/`, user_profile)
+                    .then(response => response, response => response);
             }
 
             function unAuthenticate(){
