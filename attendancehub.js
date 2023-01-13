@@ -7,6 +7,8 @@
         'attendancehub.config',
         'attendancehub.routes',
         'attendancehub.authentication',
+        'attendancehub.home',
+        'attendancehub.util'
     ]);
 
     angular

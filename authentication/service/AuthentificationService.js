@@ -19,6 +19,8 @@
                 unAuthenticate: unAuthenticate,
                 authenticatedOrRedirect: authenticatedOrRedirect,
                 setAuthorizationHeader: setAuthorizationHeader,
+                getUserProfile: getUserProfile,
+                setUserProfile: setUserProfile,
             }
 
             return Authentication;
@@ -30,6 +32,7 @@
 
                 function loginSuccessFn(response){
                     Authentication.setAuthenticatedAccount(response.data);
+                    Authentication.setUserProfile(response.data.profile);
                     $location.path('/');
                     return response;
                 }
@@ -88,8 +91,20 @@
                 Authentication.setAuthorizationHeader();
             }
 
+            function setUserProfile(user_profile){
+                let expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 1);
+                $cookies.putObject('userProfile', user_profile, {'expires':expireDate});
+            }
+
+            function getUserProfile(){
+                let user_profile = $cookies.getObject('userProfile');
+                if(!user_profile) return;
+                return user_profile;
+            }
+
             function getAuthenticatedAccount(){
-                let account = $cookies.getObject('authenticatedAccount')
+                let account = $cookies.getObject('authenticatedAccount');
                 if(!account) return;
                 return account;
             }
