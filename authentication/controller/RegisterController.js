@@ -47,19 +47,38 @@
                 
             }
 
+            // function register(){
+            //     console.log($scope.user);
+            //     if(validateForm()){
+            //         let p = Authentication.register(vm.email, vm.password);
+            //         p.then(function(response){
+            //             if(response.status < 200 || response.status > 299){
+            //                 // error
+            //                 $scope.error = response.data;
+            //             }else{
+            //                 console.log("success");
+            //                 $scope.message = `account with email ${response.data.email}`;
+            //                 Authentication.login(vm.email, vm.password)
+            //                 .then(Authentication.updateUserProfile($scope.user));
+            //             }
+            //         })
+            //     } 
+            // }
+
             function register(){
                 console.log($scope.user);
                 if(validateForm()){
-                    let p = Authentication.register(vm.email, vm.password);
+                    let user = {email: vm.email, password: vm.password};
+                    
+                    let p = Authentication.registerUserWithProfile(user, $scope.user);
                     p.then(function(response){
                         if(response.status < 200 || response.status > 299){
                             // error
                             $scope.error = response.data;
                         }else{
-                            console.log("success");
-                            $scope.message = `account with email ${response.data.email}`;
+                            // console.log("success");
+                            // $scope.message = `account with email ${response.data.email}`;
                             Authentication.login(vm.email, vm.password)
-                            .then(Authentication.updateUserProfile($scope.user));
                         }
                     })
                 } 

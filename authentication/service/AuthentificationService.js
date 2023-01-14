@@ -21,6 +21,7 @@
                 setAuthorizationHeader: setAuthorizationHeader,
                 getUserProfile: getUserProfile,
                 setUserProfile: setUserProfile,
+                registerUserWithProfile: registerUserWithProfile
             }
 
             return Authentication;
@@ -55,6 +56,12 @@
                     console.log("Register Failure");
                     return data;
                 }
+            }
+
+            function registerUserWithProfile(user, user_profile){
+                let data = {user:user, user_profile:user_profile}
+                return $http.post(`${myapi_link}/account/register-with-profile/`, data)
+                .then(response=>response, response=>response);
             }
 
             function fetchYearSection(){
