@@ -3,6 +3,7 @@
         <h5 class="card-title">Registration</h5>
     </div>
     <div class="card-body">
+        <div ng-show="error">{{error | json}}</div>
         <form name="registerForm" novalidate></form>
             <div class="form-group row mb-2">
                 <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label>
