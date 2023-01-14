@@ -21,7 +21,9 @@
                 setAuthorizationHeader: setAuthorizationHeader,
                 getUserProfile: getUserProfile,
                 setUserProfile: setUserProfile,
-                registerUserWithProfile: registerUserWithProfile
+                registerUserWithProfile: registerUserWithProfile,
+                setYearSection: setYearSection,
+                getYearSection: getYearSection,
             }
 
             return Authentication;
@@ -120,5 +122,21 @@
                 $http.defaults.headers.common['Authorization'] = "Token " + Authentication.getAuthenticatedAccount().token;
                 console.log("Authentication Header Set");
             }
+
+            function setYearSection(year_levels, sections){
+                let expireDate = new Date();
+                let data = {
+                    year_levels: year_levels,
+                    sections: sections
+                };
+                expireDate.setDate(expireDate.getDate() + 1);
+                $cookies.putObject('year_section', data, {'expires':expireDate});
+            }
+
+            function getYearSection(){
+                let year_section = $cookies.getObject('year_section');
+                if(!year_section) return;
+                return year_section;
+            } 
         }
 })();

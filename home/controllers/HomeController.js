@@ -18,5 +18,7 @@
                 Authentication.unAuthenticate();
                 $location.path('/login');
             }
+
+            console.log(Authentication.getYearSection());
         }
 })();

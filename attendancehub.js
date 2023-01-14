@@ -35,5 +35,16 @@
         }else{
             console.log("Not Authenticated");
         }
+        Authentication.fetchYearSection()
+        .then(response => {
+            if(response.status >= 200 || response.status <= 299){
+                // $scope.year_levels = response.data.year_levels;
+                // $scope.sections = response.data.sections;
+                Authentication.setYearSection(response.data.year_levels, response.data.sections)
+                console.log("Year Section Set");
+            }else{
+                $scope.page_error = `There has been an error. Please refresh the page`
+            }
+        });
     }
 })();
