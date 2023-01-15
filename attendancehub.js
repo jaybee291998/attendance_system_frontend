@@ -32,6 +32,9 @@
             Authentication.setAuthorizationHeader();
             console.log("Authenticated");
             console.log(Authentication.getAuthenticatedAccount());
+            if(Authentication.isInstructor()){
+                Authentication.setVerified()
+            }
         }else{
             console.log("Not Authenticated");
         }

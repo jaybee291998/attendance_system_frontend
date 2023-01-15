@@ -13,7 +13,7 @@
             $scope.account = Authentication.getAuthenticatedAccount()['account_details']['email'];
 
             vm.logout = logout;
-
+            $scope.isInstructor = Authentication.isInstructor();
             function logout(){
                 Authentication.unAuthenticate();
                 $location.path('/login');

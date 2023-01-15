@@ -32,6 +32,10 @@
                 controller: 'QRController',
                 templateUrl: 'home/pages/qr-code.html'
             })
+            .when('/home/qr-scanner/:period_id', {
+                controller: 'QRScannerController',
+                templateUrl: 'home/pages/qr-scanner.html'
+            })
             .otherwise('/');
     }
 })();

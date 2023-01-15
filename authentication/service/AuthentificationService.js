@@ -12,6 +12,7 @@
                 login: login,
                 register: register,
                 fetchYearSection: fetchYearSection,
+                fetchAllRegisteredUser: fetchAllRegisteredUser,
                 updateUserProfile: updateUserProfile,
                 isAuthenticated: isAuthenticated,
                 setAuthenticatedAccount: setAuthenticatedAccount,
@@ -24,6 +25,14 @@
                 registerUserWithProfile: registerUserWithProfile,
                 setYearSection: setYearSection,
                 getYearSection: getYearSection,
+                isInstructorOrRedirect: isInstructorOrRedirect,
+                isInstructor: isInstructor,
+                setVerifiedUsers: setVerifiedUsers,
+                getVerifiedUser: getVerifiedUser,
+                isVerifiedUsersLoaded: isVerifiedUsersLoaded,
+                processRegisteredUserData: processRegisteredUserData,
+                setVerified: setVerified,
+                setVerifiedOnce: setVerifiedOnce,
             }
 
             return Authentication;
@@ -64,6 +73,11 @@
                 let data = {user:user, user_profile:user_profile}
                 return $http.post(`${myapi_link}/account/register-with-profile/`, data)
                 .then(response=>response, response=>response);
+            }
+
+            function fetchAllRegisteredUser(){
+                return $http.get(`${myapi_link}/account/get-all-registered-user/`)
+                    .then(response => response, response => response);
             }
 
             function fetchYearSection(){
@@ -138,5 +152,71 @@
                 if(!year_section) return;
                 return year_section;
             } 
+
+            function isInstructorOrRedirect(){
+                let isInstructor = Authentication.isInstructor();
+                console.log("Is Instructor" + isInstructor);
+                if(!isInstructor) $location.path('/');
+                return !isInstructor;
+            }
+
+            function isInstructor(){
+                let user_profile = Authentication.getUserProfile();
+                let isInstructor = user_profile.role === 'I';
+                console.log("Is Instructor" + isInstructor);
+                return isInstructor;
+            }
+
+            function processRegisteredUserData(registered_users){
+                let newData = {};
+                registered_users.forEach(registered_user => {
+                    let qr_code = registered_user.qr_code;
+                    newData[qr_code] = [];
+                    let full_name = `${registered_user.first_name} ${registered_user.last_name}`;
+                    newData[qr_code].push(full_name);
+                    newData[qr_code].push(registered_user.year_level);
+                    newData[qr_code].push(registered_user.section);
+
+                });
+                return newData;
+            }
+
+            function setVerifiedUsers(verifiedUsers){
+                let expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 2);
+                $cookies.putObject('verifiedUsers', verifiedUsers, {'expires':expireDate});
+            }
+
+            function getVerifiedUser(){
+                let verifiedUsers = $cookies.getObject('verifiedUsers');
+                if(!verifiedUsers) return;
+                return verifiedUsers;
+            }
+
+            function isVerifiedUsersLoaded(){
+                let verifiedUsers = $cookies.getObject('verifiedUsers');
+                if(verifiedUsers) return true;
+                return false;
+            }
+
+            function setVerifiedOnce(){
+                if(Authentication.isVerifiedUsersLoaded()) return;
+                Authentication.setVerified();
+
+            }
+
+            function setVerified(){
+                let p = Authentication.fetchAllRegisteredUser();
+                p.then(response => {
+                    if(response.status >= 200 && response.status <= 299){
+                        // console.log(response.data);
+                        let processed = Authentication.processRegisteredUserData(response.data);
+                        Authentication.setVerifiedUsers(processed);
+                        console.log(processed);
+                       }else{
+                        console.log(response);
+                     }
+                 });
+            }
         }
 })();

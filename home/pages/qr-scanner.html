@@ -1,0 +1,31 @@
+<div class="card">
+    <div class="card-header">
+        <h5>QR Scanner</h5>
+    </div>
+    <div class="card-body">
+
+        <div id="video-container">
+            <video id="qr-video"></video>
+        </div>
+        <!-- <p ng-if="qr_error">{{qr_error}}</p> -->
+        <div ng-show="qr_error" class="alert alert-danger">
+            {{qr_error}}
+        </div>
+        <div ng-if="show_prompt" class="alert alert-primary">
+            <p>Does this QR code belong to <b>{{current_qr_name}}?</b></p>
+            <button class="btn btn-info" ng-click="approve()">Yes</button>
+            <button class="btn btn-light" ng-click="reject()">No</button>
+        </div>
+        <button id="start-button" class="btn btn-success">Start</button>
+        <button id="stop-button" class="btn btn-danger">Stop</button>
+        <hr>
+        <div class="alert alert-success" ng-show="show_student_list">
+            <h4>Student to be Posted</h4>
+            <ul>
+                <li ng-repeat="name in scanned_names"><p>{{name}}</p></li>
+            </ul>
+            <button class="btn btn-primary">Post Attendance</button>
+        </div>
+        
+    </div>
+</div>

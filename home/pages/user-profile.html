@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title">Registration</h5>
+        <h5 class="card-title">Profile</h5>
     </div>
     <div class="card-body">
         <div ng-show="error">{{error | json}}</div>
@@ -67,7 +67,7 @@
                 <option value="O">Other</option>
                 </select>
             </div>
-            <div class="form-row align-items-center">
+            <div class="form-row align-items-center" ng-if="!isInstructor">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="register__year_level">Year Level</label>
                     <select class="custom-select mr-sm-2" id="register__year_level" ng-model="user.year_level" ng-change="year_select()">
@@ -76,7 +76,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form-row align-items-center">
+            <div class="form-row align-items-center" ng-if="!isInstructor">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="register__section">Section</label>
                     <select class="custom-select mr-sm-2" id="register__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
