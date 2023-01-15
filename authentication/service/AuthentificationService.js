@@ -33,6 +33,12 @@
                 processRegisteredUserData: processRegisteredUserData,
                 setVerified: setVerified,
                 setVerifiedOnce: setVerifiedOnce,
+                fetchSubjects: fetchSubjects,
+                setSubjects: setSubjects,
+                getSubjects: getSubjects,
+                isSubjectSet: isSubjectSet,
+                initSubjects: initSubjects
+
             }
 
             return Authentication;
@@ -193,6 +199,24 @@
                 return verifiedUsers;
             }
 
+            function isCookieSet(cookie_name){
+                let cookie = $cookies.getObject(cookie_name);
+                if(cookie) return true;
+                return false;
+            }
+
+            function setCookie(cookie_name, data){
+                let expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 2);
+                $cookies.putObject(cookie_name, data, expireDate);
+            }
+
+            function getCookie(cookie_name){
+                let cookie = $cookies.getObject(cookie_name);
+                if(!cookie) return;
+                return cookie;
+            }
+
             function isVerifiedUsersLoaded(){
                 let verifiedUsers = $cookies.getObject('verifiedUsers');
                 if(verifiedUsers) return true;
@@ -219,6 +243,38 @@
                         console.log(response);
                      }
                  });
+            }
+
+            function setSubjects(subjects){
+                setCookie('subjects', subjects);
+            }
+
+            function getSubjects(){
+                return getCookie('subjects');
+            }
+
+            function isSubjectSet(){
+                return isCookieSet('subjects');
+            }
+
+            function fetchSubjects(){
+                return $http.get(`${myapi_link}/account/subjects/`)
+                    .then(response=>response, response=>response);
+            }
+
+            function initSubjects(){
+                console.log("Initializing Subjects");
+                let p = Authentication.fetchSubjects();
+                p.then(response => {
+                    if(response.status >= 200 && response.status <= 299){
+                        let data = response.data;
+                        console.log(data);
+                        Authentication.setSubjects(data);
+                    }else{
+                        console.error("Error fethcing subjects");
+                        console.error(response);
+                    }
+                })
             }
         }
 })();

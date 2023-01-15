@@ -19,6 +19,8 @@
                 $location.path('/login');
             }
 
+            if(Authentication.isSubjectSet()) console.log(Authentication.getSubjects());
+
             console.log(Authentication.getYearSection());
         }
 })();

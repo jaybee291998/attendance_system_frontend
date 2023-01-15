@@ -11,8 +11,8 @@
         $scope.user_profile = Authentication.getUserProfile();
         console.log($scope.user_profile.qr_code);
 		let qrcode = new QRCode(document.getElementById("qrcode"), {
-			width : 100,
-			height : 100
+			width : 300,
+			height : 300
 		});
 
         qrcode.makeCode($scope.user_profile.qr_code);

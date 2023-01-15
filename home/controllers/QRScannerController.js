@@ -20,6 +20,7 @@
         $scope.current_qr_name = null;
         $scope.show_prompt = false;
         $scope.show_student_list = false;
+        $scope.show_video_div = false;
 
         console.log(verifiedUsers);
 
@@ -39,8 +40,19 @@
             scanner.stop();
         });
 
+        $scope.start = () => {
+            scanner.start();
+            $scope.show_video_div = true;
+        }
+
+        $scope.stop = () => {
+            scanner.stop();
+            $scope.show_video_div = false;
+        }
+
         function setResult(result){
-            scanner.stop()
+            // scanner.stop()
+            $scope.stop();
             console.log(result);
             // console.log(`last result ${$scope.scanned_qr_codes.at(-1)}`)
             if(result.data === scanned_qr_codes.at(-1)){

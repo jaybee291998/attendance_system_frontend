@@ -4,8 +4,8 @@
     </div>
     <div class="card-body">
 
-        <div id="video-container">
-            <video id="qr-video"></video>
+        <div id="video-container" class="d-flex justify-content-center mb-3" ng-show="show_video_div">
+            <video id="qr-video" width="852" height="480"></video>
         </div>
         <!-- <p ng-if="qr_error">{{qr_error}}</p> -->
         <div ng-show="qr_error" class="alert alert-danger">
@@ -16,8 +16,8 @@
             <button class="btn btn-info" ng-click="approve()">Yes</button>
             <button class="btn btn-light" ng-click="reject()">No</button>
         </div>
-        <button id="start-button" class="btn btn-success">Start</button>
-        <button id="stop-button" class="btn btn-danger">Stop</button>
+        <button id="start-button" class="btn btn-success" ng-click="start()">Start</button>
+        <button id="stop-button" class="btn btn-danger" ng-click="stop()">Stop</button>
         <hr>
         <div class="alert alert-success" ng-show="show_student_list">
             <h4>Student to be Posted</h4>

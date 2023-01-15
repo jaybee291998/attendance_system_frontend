@@ -33,7 +33,8 @@
             console.log("Authenticated");
             console.log(Authentication.getAuthenticatedAccount());
             if(Authentication.isInstructor()){
-                Authentication.setVerified()
+                Authentication.setVerified();
+                Authentication.initSubjects();
             }
         }else{
             console.log("Not Authenticated");
