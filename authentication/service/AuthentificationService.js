@@ -201,11 +201,13 @@
 
             function setVerifiedOnce(){
                 if(Authentication.isVerifiedUsersLoaded()) return;
+                console.log("Successfully Called set verified once");
                 Authentication.setVerified();
 
             }
 
             function setVerified(){
+                console.log("Set Verified called");
                 let p = Authentication.fetchAllRegisteredUser();
                 p.then(response => {
                     if(response.status >= 200 && response.status <= 299){

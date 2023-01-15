@@ -9,7 +9,7 @@
 
     function QRScannerController($scope, $location, $routeParams, $timeout, Authentication){
         if(Authentication.authenticatedOrRedirect())return;
-        if(Authentication.isInstructorOrRedirect())return; 
+        if(Authentication.isInstructorOrRedirect())return;
         const current_period_id = $routeParams.period_id;
         const video = document.getElementById('qr-video');
         const verifiedUsers = Authentication.getVerifiedUser();

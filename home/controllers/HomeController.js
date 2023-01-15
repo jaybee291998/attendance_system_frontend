@@ -11,7 +11,7 @@
             console.log('INSIDE HOME CONTROLLER');
             let vm = this;
             $scope.account = Authentication.getAuthenticatedAccount()['account_details']['email'];
-
+            if(Authentication.isInstructor()) Authentication.setVerifiedOnce(); 
             vm.logout = logout;
             $scope.isInstructor = Authentication.isInstructor();
             function logout(){
