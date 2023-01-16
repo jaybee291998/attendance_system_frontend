@@ -4,20 +4,20 @@
     </div>
     <div class="card-body">
         <div ng-show="error">{{error | json}}</div>
-        <form name="registerForm" novalidate></form>
+        <form name="userForm" novalidate>
             <div class="form-group row mb-2">
-                <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label>
+                <label for="user_profile__first_name" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__first_name" placeholder="first name" 
-                ng-model="user.first_name" 
-                required>
+                <input type="text" class="form-control" name="user_profile__first_name" placeholder="first name" 
+                    ng-model="user.first_name" 
+                    required>
                 </div>
             </div>
         
             <div class="form-group row mb-2">
                 <label for="register__last_name" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__last_name" placeholder="last name" 
+                <input type="text" class="form-control" name="user_profile__last_name" placeholder="last name" 
                 ng-model="user.last_name" 
                 required>
                 </div>
@@ -26,7 +26,7 @@
             <div class="form-group row mb-2">
                 <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__middle_name" placeholder="middle name" 
+                <input type="text" class="form-control" name="user_profile__middle_name" placeholder="middle name" 
                 ng-model="user.middle_name" 
                 required>
                 </div>
@@ -35,7 +35,7 @@
             <div class="form-group row mb-2">
                 <label for="register__age" class="col-sm-2 col-form-label">Age</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__age" placeholder="age" 
+                <input type="number" class="form-control" name="user_profile__age" placeholder="age" 
                 ng-model="user.age" 
                 required>
                 </div>
@@ -44,7 +44,7 @@
             <div class="form-group row mb-2">
                 <label for="register__address" class="col-sm-2 col-form-label">Address</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__address" placeholder="address" 
+                <input type="text" class="form-control" name="user_profile__address" placeholder="address" 
                 ng-model="user.address" 
                 required>
                 </div>
@@ -53,24 +53,30 @@
             <div class="form-group row mb-2">
                 <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="register__phone" placeholder="phone" 
+                <input type="text" class="form-control" name="user_profile__phone" placeholder="phone" 
                 ng-model="user.phone"
                 required>
                 </div>
             </div>
             <div class="col-auto my-1">
-                <label class="mr-sm-2" for="register__sex">Sex</label>
-                <select class="custom-select mr-sm-2" id="register__sex" ng-model="user.SexChoices">
-                <!-- <option selected>Choose...</option> -->
-                <option value="M">Male</option>
-                <option value="F">Female</option>
-                <option value="O">Other</option>
+                <label class="mr-sm-2" for="user_profile__sex">Sex</label>
+                <select class="form-select" 
+                    name="register__sex" 
+                    ng-model="user.SexChoices"
+                    ng-options="sex_choice.id as sex_choice.name for sex_choice in sex_choices"
+                    required>
+                        <option value="">-- choose --</option>
                 </select>
             </div>
             <div class="form-row align-items-center" ng-if="!isInstructor">
                 <div class="col-auto my-1">
-                    <label class="mr-sm-2" for="register__year_level">Year Level</label>
-                    <select class="custom-select mr-sm-2" id="register__year_level" ng-model="user.year_level" ng-change="year_select()">
+                    <label class="mr-sm-2" for="user_profile__year_level">Year Level</label>
+                    <select class="form-select" 
+                    name="user_profile__year_level" 
+                    ng-model="user.year_level" 
+                    ng-change="year_select()"
+                    required>
+                        <!-- <option value="">-- choose --</option> -->
                     <!-- <option selected>Choose...</option> -->
                     <option ng-repeat="year_level in year_levels" value={{year_level.id}}>{{year_level.name}}</option>
                     </select>
@@ -78,8 +84,8 @@
             </div>
             <div class="form-row align-items-center" ng-if="!isInstructor">
                 <div class="col-auto my-1">
-                    <label class="mr-sm-2" for="register__section">Section</label>
-                    <select class="custom-select mr-sm-2" id="register__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
+                    <label class="mr-sm-2" for="user_profile__section">Section</label>
+                    <select class="form-select" name="user_profile__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
                     <!-- <option selected>Choose...</option> -->
                     <option ng-repeat="section in valid_sections" value={{section.id}}>{{section.name}}</option>
                     </select>
@@ -87,7 +93,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <button  class="btn btn-primary" ng-click="update_profile()" ng-disabled="registerForm.$invalid">Update Profile</button>
+                    <button  class="btn btn-primary" ng-click="update_profile()" ng-disabled="userForm.$invalid">Update Profile</button>
                 </div>
             </div>
         </form>

@@ -16,17 +16,18 @@
             $scope.sections = data.sections;
             $scope.valid_sections = [];
             $scope.disable_section_selection = false;
+            $scope.sex_choices = [
+                {id:'M', name:'Male'},
+                {id:'F', name:'Female'},
+                {id:'O', name:'Other'}
+            ];
 
             $scope.isInstructor = Authentication.isInstructor();
             
             function init(){
                 console.log($scope.user);
                 $scope.valid_sections = $scope.sections.filter(section => section.year_level === parseInt($scope.user.year_level))
-                // $scope.year_levels = data.year_levels.map(year_level=>{
-                //     let new_year_level = {...year_level};
-                //     new_year_level["selected"] = year_level.id === parseInt($scope.user.year_level);
-                //     return new_year_level;
-                // });
+
                 console.log(typeof $scope.user.year_level);
                 $scope.user.year_level = ""+$scope.user.year_level;
                 $scope.user.section = ""+$scope.user.section;
@@ -36,12 +37,11 @@
 
             init();
             $scope.year_select = () => {
-                // $scope.user.year_level = parseInt($scope.user.year_level)
+
                 console.log(typeof $scope.user.year_level);
                 $scope.valid_sections = $scope.sections.filter(section => section.year_level === parseInt($scope.user.year_level))
                 console.log($scope.valid_sections);
                 $scope.disable_section_selection = false;
-                // $scope.user.year_level = 
             }
 
             $scope.update_profile = () => {
@@ -54,7 +54,6 @@
                     }else{
                         console.log("success");
                         $scope.message = `u[dayed] ${response.data.email}`;
-                        // Authentication.login(vm.email, vm.password)
                         console.log(response.data);
                         Authentication.setUserProfile(response.data)
                         $location.path('/');

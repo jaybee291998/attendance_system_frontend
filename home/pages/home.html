@@ -5,8 +5,12 @@
           <a class="btn btn-outline-success" href="#!/home/user-profile/">User Profile</a>
           <a class="btn btn-outline-success" href="#!/home/qr-code/" ng-if="!isInstructor">QR Code</a>
           <a class="btn btn-outline-success" href="#!/home/qr-scanner/0" ng-if="isInstructor">QR Scanner</a>
+          <a class="btn btn-outline-success" href="#!/home/create-period" ng-if="isInstructor">Create Period</a>
         </form>
       </nav>
+    <div ng-if="isInstructor" class="flex-container container"> 
+      <my-period-card ng-repeat="period in named_periods" period-info="period">lala</my-period-card>
+    </div>
     <div>
         <button ng-click="vm.logout()" class="btn btn-danger">logout</button>
     </div>

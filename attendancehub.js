@@ -35,6 +35,7 @@
             if(Authentication.isInstructor()){
                 Authentication.setVerified();
                 Authentication.initSubjects();
+                Authentication.initPeriods();
             }
         }else{
             console.log("Not Authenticated");

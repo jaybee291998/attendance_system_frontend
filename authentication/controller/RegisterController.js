@@ -21,6 +21,11 @@
             $scope.sections = [];
             $scope.valid_sections = [];
             $scope.user_profile = {};
+            $scope.sex_choices = [
+                {id:'M', name:'Male'},
+                {id:'F', name:'Female'},
+                {id:'O', name:'Other'}
+            ];
             $scope.disable_section_selection = true;
 
             Authentication.fetchYearSection()

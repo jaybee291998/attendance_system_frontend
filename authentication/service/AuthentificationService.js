@@ -37,7 +37,14 @@
                 setSubjects: setSubjects,
                 getSubjects: getSubjects,
                 isSubjectSet: isSubjectSet,
-                initSubjects: initSubjects
+                initSubjects: initSubjects,
+                createPeriod: createPeriod,
+                fetchPeriods: fetchPeriods,
+                setPeriods: setPeriods,
+                getPeriods: getPeriods,
+                isPeriodSet: isPeriodSet,
+                initPeriods: initPeriods,
+                initPeriodsOnce: initPeriodsOnce,
 
             }
 
@@ -52,6 +59,7 @@
                     Authentication.setAuthenticatedAccount(response.data);
                     Authentication.setUserProfile(response.data.profile);
                     $location.path('/');
+                    if(Authentication.isInstructor())Authentication.initPeriods();
                     return response;
                 }
 
@@ -275,6 +283,48 @@
                         console.error(response);
                     }
                 })
+            }
+
+            function createPeriod(period, succ, err){
+                return $http.post(`${myapi_link}/account/period-list/`, period)
+                    .then(succ, err);
+            }
+
+            function fetchPeriods(succ, err){
+                return $http.get(`${myapi_link}/account/period-list/`)
+                        .then(succ, err);
+            }
+
+            function setPeriods(periods){
+                setCookie('periods', periods);
+            }
+
+            function getPeriods(){
+                return getCookie('periods');
+            }
+
+            function isPeriodSet(){
+                return isCookieSet('periods');
+            }
+
+            function initPeriods(){
+                console.warn("Init periods");
+                let p = Authentication.fetchPeriods(succ, err);
+                function succ(response){
+                    let data = response.data;
+                    Authentication.setPeriods(data);
+                    console.log(data);
+                }
+
+                function err(response){
+                    console.error(response);
+                }
+            }
+
+            function initPeriodsOnce(){
+                console.warn("Init periods once");
+                // console.warn(isPeriodSet())
+                if(!isPeriodSet()) Authentication.initPeriods();
             }
         }
 })();

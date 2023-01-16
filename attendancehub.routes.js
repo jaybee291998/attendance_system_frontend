@@ -36,6 +36,10 @@
                 controller: 'QRScannerController',
                 templateUrl: 'home/pages/qr-scanner.html'
             })
+            .when('/home/create-period/', {
+                controller: 'PeriodCreationController',
+                templateUrl: 'home/pages/period-creation.html'
+            })
             .otherwise('/');
     }
 })();

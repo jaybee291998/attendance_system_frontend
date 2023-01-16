@@ -38,7 +38,7 @@
                 <div class="form-group row mb-2">
                     <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__first_name" placeholder="first name" 
+                      <input type="text" class="form-control" name="register__first_name" placeholder="first name" 
                       ng-model="user.first_name" 
                       required>
                     </div>
@@ -65,7 +65,7 @@
                 <div class="form-group row mb-2">
                     <label for="register__age" class="col-sm-2 col-form-label">Age</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__age" placeholder="age" 
+                      <input type="number" class="form-control" id="register__age" placeholder="age" 
                       ng-model="user.age" 
                       required>
                     </div>
@@ -90,35 +90,46 @@
                 </div>
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="register__sex">Sex</label>
-                    <select class="custom-select mr-sm-2" id="register__sex" ng-model="user.sex">
-                      <!-- <option selected>Choose...</option> -->
-                      <option value="M">Male</option>
-                      <option value="F">Female</option>
-                      <option value="O">Other</option>
+                    <select class="form-select" 
+                      name="register__sex" 
+                      ng-model="user.sex"
+                      ng-options="sex_choice.id as sex_choice.name for sex_choice in sex_choices"
+                      required>
+                        <option value="">-- choose --</option>
                     </select>
                 </div>
                 <div class="form-row align-items-center">
                     <div class="col-auto my-1">
                         <label class="mr-sm-2" for="register__year_level">Year Level</label>
-                        <select class="custom-select mr-sm-2" id="register__year_level" ng-model="user.year_level" ng-change="year_select()">
-                          <!-- <option selected>Choose...</option> -->
-                          <option ng-repeat="year_level in year_levels" value="{{year_level.id}}">{{year_level.name}}</option>
+                        <select class="form-select" 
+                          name="register__year_level" 
+                          ng-model="user.year_level" 
+                          ng-change="year_select()"
+                          ng-options="year_level.id as year_level.name for year_level in year_levels"
+                          required>
+                            <option value="">-- choose --</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row align-items-center">
                     <div class="col-auto my-1">
                         <label class="mr-sm-2" for="register__section">Section</label>
-                        <select class="custom-select mr-sm-2" id="register__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
-                          <!-- <option selected>Choose...</option> -->
-                          <option ng-repeat="section in valid_sections" value="{{section.id}}">{{section.name}}</option>
+                        <select class="form-select" 
+                          name="register__section" 
+                          ng-model="user.section" 
+                          ng-change="section_change()" 
+                          ng-disabled="disable_section_selection"
+                          ng-options="section.id as section.name for section in valid_sections"
+                          required>
+                            <option value="">-- choose --</option>
+                          <!-- <option ng-repeat="section in valid_sections" value="{{section.id}}">{{section.name}}</option> -->
                         </select>
                     </div>
                 </div>
     
                 <div class="form-group row">
                   <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary" ng-click="vm.register()">Sign in</button>
+                    <button type="submit" class="btn btn-primary" ng-click="vm.register()" ng-disabled="registerForm.$invalid">Sign in</button>
                   </div>
                 </div>
             </form>
