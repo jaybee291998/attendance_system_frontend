@@ -1,9 +1,10 @@
 <div class="card">
     <div class="card-header">
-        <h5>QR Scanner</h5>
+        <h5>QR Scanner : {{period_name}}</h5>
+        <hr>
+        <a class="btn btn-outline-success" href="#!/">Home</a>
     </div>
     <div class="card-body">
-
         <div id="video-container" class="d-flex justify-content-center mb-3" ng-show="show_video_div">
             <video id="qr-video" width="852" height="480"></video>
         </div>
@@ -16,15 +17,18 @@
             <button class="btn btn-info" ng-click="approve()">Yes</button>
             <button class="btn btn-light" ng-click="reject()">No</button>
         </div>
-        <button id="start-button" class="btn btn-success" ng-click="start()">Start</button>
-        <button id="stop-button" class="btn btn-danger" ng-click="stop()">Stop</button>
-        <hr>
+        <div ng-show="show_options">
+            <button id="start-button" class="btn btn-success" ng-click="start()">Start</button>
+            <button id="stop-button" class="btn btn-danger" ng-click="stop()">Stop</button>
+            <hr>
+        </div>
+
         <div class="alert alert-success" ng-show="show_student_list">
             <h4>Student to be Posted</h4>
             <ul>
                 <li ng-repeat="name in scanned_names"><p>{{name}}</p></li>
             </ul>
-            <button class="btn btn-primary">Post Attendance</button>
+            <button class="btn btn-primary" ng-click="psot_attendance()">Post Attendance</button>
         </div>
         
     </div>

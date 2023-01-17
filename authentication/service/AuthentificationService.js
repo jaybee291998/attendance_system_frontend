@@ -45,6 +45,7 @@
                 isPeriodSet: isPeriodSet,
                 initPeriods: initPeriods,
                 initPeriodsOnce: initPeriodsOnce,
+                period_to_named_period: period_to_named_period,
 
             }
 
@@ -58,8 +59,9 @@
                 function loginSuccessFn(response){
                     Authentication.setAuthenticatedAccount(response.data);
                     Authentication.setUserProfile(response.data.profile);
-                    $location.path('/');
                     if(Authentication.isInstructor())Authentication.initPeriods();
+                    $location.path('/');
+                    
                     return response;
                 }
 
@@ -325,6 +327,22 @@
                 console.warn("Init periods once");
                 // console.warn(isPeriodSet())
                 if(!isPeriodSet()) Authentication.initPeriods();
+            }
+
+            function period_to_named_period(period, year_levels, sections, subjects){
+                let subject_id = period.subject;
+                let subject_name = subjects.filter(subject => subject.id === parseInt(subject_id))[0].name;
+                let section_id = period.section;
+                let selected_section = sections.filter(section => section.id === parseInt(section_id))[0];
+                let section_name = selected_section.name;
+                let year_level_section =  selected_section.year_level;
+                let year_level_name = year_levels.filter(year_level => year_level.id === parseInt(year_level_section))[0].name;
+                let d = {
+                    subject: subject_name,
+                    year_level: year_level_name,
+                    section: section_name
+                }
+                return d;
             }
         }
 })();

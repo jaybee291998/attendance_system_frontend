@@ -40,6 +40,10 @@
                 controller: 'PeriodCreationController',
                 templateUrl: 'home/pages/period-creation.html'
             })
+            .when('/home/attendance-sheet/:period_id',{
+                controller: 'AttendanceSheetController',
+                templateUrl: 'home/pages/attendance-sheet.html'
+            })
             .otherwise('/');
     }
 })();

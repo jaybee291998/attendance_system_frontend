@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+        <h4>{{period_name}}</h4>
+        <hr>
+        <a class="btn btn-outline-success" href="#!/">Home</a>
+        <a class="btn btn-outline-success" ng-href="#!/home/qr-scanner/{{period_id}}">QR Scanner</a>
+    </div>
+    <div class="card-body">
+        <form name="date_range" novalidate>
+            <input type="date" name="start_date" ng-change="date_change()" ng-model="start_date" max="{{max_date}}">
+            <input type="date" name="end_date" ng-change="date_change()" ng-model="end_date" min="{{min_date}}" max="{{max_date}}">
+            <button ng-disabled="date_range.$invalid">Submit</button>
+        </form>
+        
+    </div>
+</div>

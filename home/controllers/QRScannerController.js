@@ -10,7 +10,7 @@
     function QRScannerController($scope, $location, $routeParams, $timeout, Authentication){
         if(Authentication.authenticatedOrRedirect())return;
         if(Authentication.isInstructorOrRedirect())return;
-        const current_period_id = $routeParams.period_id;
+        $scope.period_id = $routeParams.period_id;
         const video = document.getElementById('qr-video');
         const verifiedUsers = Authentication.getVerifiedUser();
         let scanned_qr_codes = [];
@@ -21,8 +21,23 @@
         $scope.show_prompt = false;
         $scope.show_student_list = false;
         $scope.show_video_div = false;
+        $scope.show_options = true;
+
+        $scope.subjects = Authentication.getSubjects();
+        let year_section = Authentication.getYearSection();
+        $scope.year_levels = year_section.year_levels;
+        $scope.sections = year_section.sections;
+
+        let period = Authentication.getPeriods().filter(period => period.id === parseInt($scope.period_id))[0];
+        let named_period = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
+        $scope.period_name = `${named_period.subject} - ${named_period.year_level} ${named_period.section}`;
 
         console.log(verifiedUsers);
+
+        $scope.$on('$destroy', ()=>{
+            $scope.stop();
+            console.log("STOPPPEDDD");
+        });
 
         const scanner = new QrScanner(video, setResult, {
             onDecodeError: error => {
@@ -50,6 +65,10 @@
             $scope.show_video_div = false;
         }
 
+
+        $scope.post_attendance = () => {
+            console.log(scanned_qr_codes);
+        }
         function setResult(result){
             // scanner.stop()
             $scope.stop();

@@ -9,6 +9,7 @@
         function controller($scope, $location){
             $scope.click = () => {
                 console.log($scope.periodInfo);
+                $location.path(`/home/attendance-sheet/${$scope.periodInfo.id}`);
             }
         }
 
