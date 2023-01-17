@@ -46,6 +46,9 @@
                 initPeriods: initPeriods,
                 initPeriodsOnce: initPeriodsOnce,
                 period_to_named_period: period_to_named_period,
+                postAttendanceRecords: postAttendanceRecords,
+                fetchAttendanceRecords: fetchAttendanceRecords,
+                section_to_string: section_to_string
 
             }
 
@@ -343,6 +346,23 @@
                     section: section_name
                 }
                 return d;
+            }
+
+            function section_to_string(section_id, year_levels, sections){
+                let section = sections.filter(section => section.id == section_id)[0];
+                let year_id = section.year_level
+                let year_level = year_levels.filter(year_level => year_level.id == year_id)[0];
+                return `${year_level.name} ${section.name}`;
+            }
+
+            function postAttendanceRecords(attendance_records, period_id, succ, err){
+                return $http.post(`${myapi_link}/attendance/attendance-records/${period_id}/`, attendance_records)
+                    .then(succ, err);
+            }
+
+            function fetchAttendanceRecords(period_id, succ, err){
+                return $http.get(`${myapi_link}/attendance/attendance-records/${period_id}/`)
+                    .then(succ, err);
             }
         }
 })();

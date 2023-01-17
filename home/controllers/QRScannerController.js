@@ -22,6 +22,8 @@
         $scope.show_student_list = false;
         $scope.show_video_div = false;
         $scope.show_options = true;
+        // $scope.show_post_error = false;
+        $scope.post_error = null;
 
         $scope.subjects = Authentication.getSubjects();
         let year_section = Authentication.getYearSection();
@@ -32,7 +34,9 @@
         let named_period = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
         $scope.period_name = `${named_period.subject} - ${named_period.year_level} ${named_period.section}`;
 
-        console.log(verifiedUsers);
+        console.log(verifiedUsers);    
+        console.log(named_period);
+        console.log(period);
 
         $scope.$on('$destroy', ()=>{
             $scope.stop();
@@ -45,14 +49,6 @@
             },
             highlightScanRegion: true,
             highlightCodeOutline: true,
-        });
-
-        document.getElementById('start-button').addEventListener('click', () => {
-            scanner.start();
-        });
-    
-        document.getElementById('stop-button').addEventListener('click', () => {
-            scanner.stop();
         });
 
         $scope.start = () => {
@@ -68,6 +64,21 @@
 
         $scope.post_attendance = () => {
             console.log(scanned_qr_codes);
+            $scope.show_student_list = false;
+            $scope.show_options = false;
+            scanner.stop();
+            Authentication.postAttendanceRecords(scanned_qr_codes, $scope.period_id, $scope.succ, $scope.err);
+        }
+
+        $scope.succ = response => {
+            console.log(response);
+            $scope.valid_records = response.data.valid_records;
+            if(response.data.failed.length != 0) $scope.invalid_records = response.data.failed;
+        }
+
+        $scope.err = response => {
+            console.log(response);
+            $scope.post_error = response.data;
         }
         function setResult(result){
             // scanner.stop()
@@ -85,15 +96,18 @@
                 setQrError("QR code not registered");
                 return;
             }
+            console.log(d);
+            if(d[2] != period.section){
+                let sect = Authentication.section_to_string(d[2], $scope.year_levels, $scope.sections);
+                setQrError(`${d[0]} is a ${sect} student`);
+                return;
+            }
 
             $scope.current_qr_code = result.data;
             $scope.current_qr_name = d[0];
 
             $scope.show_prompt = true;
             $scope.$apply();
-            // console.log($scope.scanned_qr_codes);
-            
-
         }
 
         function setQrError(error){

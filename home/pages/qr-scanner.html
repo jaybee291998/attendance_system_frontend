@@ -23,13 +23,30 @@
             <hr>
         </div>
 
-        <div class="alert alert-success" ng-show="show_student_list">
+        <div class="alert alert-info" ng-show="show_student_list">
             <h4>Student to be Posted</h4>
             <ul>
-                <li ng-repeat="name in scanned_names"><p>{{name}}</p></li>
+                <p ng-repeat="name in scanned_names">- {{name}}</p>
             </ul>
-            <button class="btn btn-primary" ng-click="psot_attendance()">Post Attendance</button>
+            <button class="btn btn-primary" ng-click="post_attendance()">Post Attendance</button>
         </div>
-        
+
+        <div class="alert alert-success" ng-show="valid_records">
+            <h4>Posted Successfully</h4>
+            <ul>
+                <p ng-repeat="valid_record in valid_records">+ {{valid_record}}</p>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning" ng-show="invalid_records">
+            <h4>Post Failed</h4>
+            <ul>
+                <p ng-repeat="invalid_record in invalid_records">* {{invalid_record}}</p>
+            </ul>
+        </div>
+
+        <div class="alert alert-danger" ng-show="post_error">
+            {{post_error | json}}
+        </div>
     </div>
 </div>
