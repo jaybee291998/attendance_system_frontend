@@ -16,7 +16,7 @@
             let vm = this;
 
             vm.register = register;
-            $scope.page_error = "";
+            $scope.page_error = null;
             $scope.year_levels = [];
             $scope.sections = [];
             $scope.valid_sections = [];

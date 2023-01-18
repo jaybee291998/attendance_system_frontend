@@ -360,8 +360,8 @@
                     .then(succ, err);
             }
 
-            function fetchAttendanceRecords(period_id, succ, err){
-                return $http.get(`${myapi_link}/attendance/attendance-records/${period_id}/`)
+            function fetchAttendanceRecords(period_id, start_date, end_date, succ, err){
+                return $http.get(`${myapi_link}/attendance/attendance-records/${period_id}/?start_date=${start_date}&end_date=${end_date}`)
                     .then(succ, err);
             }
         }

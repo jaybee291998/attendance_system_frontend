@@ -9,8 +9,31 @@
         <form name="date_range" novalidate>
             <input type="date" name="start_date" ng-change="date_change()" ng-model="start_date" max="{{max_date}}">
             <input type="date" name="end_date" ng-change="date_change()" ng-model="end_date" min="{{min_date}}" max="{{max_date}}">
-            <button ng-disabled="date_range.$invalid">Submit</button>
+            <button ng-disabled="date_range.$invalid" class="btn btn-success" ng-click="fetch_records()">Submit</button>
         </form>
+        <hr>
+        <div class="text-center">
+            <h4>Attendance</h4>
+            <h5>from {{start_date_str}} to {{end_date_str}}</h5>
+        </div>
+
+        <!-- <input type="text" name="" id="" value="{{t(i)}}"> -->
+        <hr>
+        <div>
+            <table class="table table-bordered" id="tbl_exporttable_to_xls">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in table_headers" class="text-center">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="table_row in table_body">
+                        <td ng-repeat="data in table_row track by $index" class="text-center">{{data}} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" ng-click="export_to_excel('xlsx')">Download Excel</button>
+        </div>
         
     </div>
 </div>

@@ -154,6 +154,31 @@ li{
     cursor: pointer;
   }
 
+  .scrollable {
+    overflow: auto;
+  }
+
+  .rotated-header th {
+    height: 240px;
+    vertical-align: bottom;
+    text-align: left;
+    line-height: 1;
+  }
+
+  .rotated-header-container {
+    width: 75px;
+  }
+
+  .rotated-header-content {
+    width: 300px;
+    transform-origin: bottom left;
+    transform: translateX(75px) rotate(-45deg);
+  }
+
+  .rotated-header td:not(:first-child) {
+    text-align: right;
+  }
+
 
 @media only screen and (max-width: 1079px) {
     .my-container {

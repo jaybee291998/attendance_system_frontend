@@ -1,12 +1,13 @@
 <div class="pl-10 pl-10">
-    <div ng-show="page_error.length < 0">{{page_error}}</div>
-    <div ng-show="error" ng-bind="error"></div>
-    <div ng-show="message" ng-bind="message"></div>
+
     <div class="card">
 	    <div class="card-header">
 	        <h5 class="card-title">Registration</h5>
 	    </div>
         <div class="card-body">
+          <div ng-show="page_error">{{page_error}}</div>
+          <div ng-show="error" ng-bind="error" class="alert alert-danger">{{error | json}}</div>
+          <div ng-show="message" ng-bind="message" class="alert alert-warn">{{message | json}}</div>
             <form name="registerForm" novalidate>
                 <div class="form-group row mb-2">
                   <label for="register__email" class="col-sm-2 col-form-label">Email</label>
