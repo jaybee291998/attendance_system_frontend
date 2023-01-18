@@ -8,15 +8,19 @@
     function PeriodCard(){
         function controller($scope, $location){
             $scope.click = () => {
-                console.log($scope.periodInfo);
-                $location.path(`/home/attendance-sheet/${$scope.periodInfo.id}`);
+                console.log($scope.myLink);
+                $location.path($scope.myLink + $scope.id);
             }
         }
 
         let directive = {
             restrict: 'E',
             scope: {
-                periodInfo: '='
+                header: '=',
+                subheader: '=',
+                myLink: '=', 
+                id: '=',
+                body: '='
             },
             templateUrl: 'home/pages/my-period-card.html',
             controller: ['$scope', '$location', controller]      

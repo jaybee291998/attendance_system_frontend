@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-header">
+        <h4>{{header_name}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="flex-container container">
+            <my-period-card ng-repeat="period in named_periods" header="period.subject" subheader="period.year_level + ' - ' + period.section" my-link="'/home/attendance-sheet/'" id="period.id" body="period.instructor_name"></my-period-card>
+        </div>
+    </div>
+</div>

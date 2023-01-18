@@ -11,7 +11,7 @@
             console.log('INSIDE HOME CONTROLLER');
             let vm = this;
             $scope.account = Authentication.getAuthenticatedAccount()['account_details']['email'];
-            if(Authentication.isInstructor()){
+            if(Authentication.isInstructor() || Authentication.isAdmin()){
                 Authentication.setVerifiedOnce();
                 Authentication.initPeriodsOnce();
                 let year_section = Authentication.getYearSection();
@@ -30,11 +30,16 @@
             }; 
             vm.logout = logout;
             $scope.isInstructor = Authentication.isInstructor();
+            $scope.isAdmin = Authentication.isAdmin();
 
 
             function logout(){
                 Authentication.unAuthenticate();
                 $location.path('/login');
+            }
+
+            $scope.year_level_select = (id) => {
+                console.log(id);
             }
 
 

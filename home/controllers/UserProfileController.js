@@ -23,6 +23,7 @@
             ];
 
             $scope.isInstructor = Authentication.isInstructor();
+            $scope.isAdmin = Authentication.isAdmin();
             
             function init(){
                 console.log($scope.user);

@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-header">
+        <h4>{{year_level_name}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="flex-container container">
+            <my-period-card ng-repeat="section in year_level_sections" header="section.name" subheader="" my-link="'/home/periods/'" id="section.id"></my-period-card>
+        </div>
+    </div>
+</div>

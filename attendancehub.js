@@ -32,10 +32,14 @@
             Authentication.setAuthorizationHeader();
             console.log("Authenticated");
             console.log(Authentication.getAuthenticatedAccount());
-            if(Authentication.isInstructor()){
+            if(Authentication.isInstructor() || Authentication.isAdmin()){
                 Authentication.setVerified();
                 Authentication.initSubjects();
                 Authentication.initPeriods();
+                
+            }
+            if(Authentication.isAdmin()){
+                Authentication.initAllInstructors();
             }
         }else{
             console.log("Not Authenticated");

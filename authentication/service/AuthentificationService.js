@@ -48,7 +48,15 @@
                 period_to_named_period: period_to_named_period,
                 postAttendanceRecords: postAttendanceRecords,
                 fetchAttendanceRecords: fetchAttendanceRecords,
-                section_to_string: section_to_string
+                section_to_string: section_to_string,
+                isAdmin: isAdmin,
+                isInstructorOrAdminOrRedirect: isInstructorOrAdminOrRedirect,
+                isAdminOrRedirect: isAdminOrRedirect,
+                setAllInstructors: setAllInstructors,
+                getAllInstructors: getAllInstructors,
+                fetchAllInstructors: fetchAllInstructors,
+                isAllInstructorsSet: isAllInstructorsSet,
+                initAllInstructors: initAllInstructors
 
             }
 
@@ -179,11 +187,31 @@
                 return !isInstructor;
             }
 
+            function isInstructorOrAdminOrRedirect(){
+                let user_profile = Authentication.getUserProfile();
+                let isInstructorOrAdmin = user_profile.role === 'I' || user_profile.role ==='A';
+                if(!isInstructorOrAdmin) $location.path('/');
+                return !isInstructorOrAdmin;
+            }
+
             function isInstructor(){
                 let user_profile = Authentication.getUserProfile();
                 let isInstructor = user_profile.role === 'I';
                 console.log("Is Instructor" + isInstructor);
                 return isInstructor;
+            }
+
+            function isAdmin(){
+                let user_profile = Authentication.getUserProfile();
+                let isAdmin = user_profile.role === 'A';
+                console.log("Is Admin: " + isAdmin);
+                return isAdmin;
+            }
+
+            function isAdminOrRedirect(){
+                let isAdmin = Authentication.isAdmin();
+                if(!isAdmin) $location.path('/');
+                return !isAdmin;
             }
 
             function processRegisteredUserData(registered_users){
@@ -363,6 +391,37 @@
             function fetchAttendanceRecords(period_id, start_date, end_date, succ, err){
                 return $http.get(`${myapi_link}/attendance/attendance-records/${period_id}/?start_date=${start_date}&end_date=${end_date}`)
                     .then(succ, err);
+            }
+
+            function fetchAllInstructors(succ, err){
+                return $http.get(`${myapi_link}/account/get-all-instructors/`)
+                    .then(succ, err);
+            }
+
+            function setAllInstructors(all_instructors){
+                setCookie('allInstructors', all_instructors);
+            }
+
+            function getAllInstructors(){
+                return getCookie('allInstructors');
+            }
+
+            function isAllInstructorsSet(){
+                return isCookieSet('allInstructors');
+            }
+
+            function initAllInstructors(){
+                console.warn("Init All Instructors");
+                let p = Authentication.fetchAllInstructors(succ, err);
+                function succ(response){
+                    let data = response.data;
+                    Authentication.setAllInstructors(data);
+                    console.log(data);
+                }
+
+                function err(response){
+                    console.error(response);
+                }
             }
         }
 })();

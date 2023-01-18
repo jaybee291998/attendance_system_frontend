@@ -9,8 +9,8 @@
 
     function AttendanceSheetController($scope, $sce, $location, $routeParams, Authentication, DateUtil){
         if(Authentication.authenticatedOrRedirect())return;
-        if(Authentication.isInstructorOrRedirect())return;
-
+        if(Authentication.isInstructorOrAdminOrRedirect())return;
+        $scope.isAdmin = Authentication.isAdmin();
         $scope.period_id = $routeParams.period_id;
         $scope.subjects = Authentication.getSubjects();
         let year_section = Authentication.getYearSection();
@@ -18,6 +18,7 @@
         $scope.sections = year_section.sections;
 
         let period = Authentication.getPeriods().filter(period => period.id === parseInt($scope.period_id))[0];
+        console.log({period:period});
         let named_period = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
         $scope.period_name = `${named_period.subject} - ${named_period.year_level} ${named_period.section}`;
         $scope.start_date = new Date(DateUtil.dateToString(new Date));

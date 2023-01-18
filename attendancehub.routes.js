@@ -44,6 +44,14 @@
                 controller: 'AttendanceSheetController',
                 templateUrl: 'home/pages/attendance-sheet.html'
             })
+            .when('/home/sections/:year_level_id', {
+                controller: 'SectionController',
+                templateUrl: 'home/pages/sections.html'
+            })
+            .when('/home/periods/:section_id',{
+                controller: 'PeriodController',
+                templateUrl: 'home/pages/period.html'
+            })
             .otherwise('/');
     }
 })();

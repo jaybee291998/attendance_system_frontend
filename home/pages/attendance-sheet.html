@@ -3,7 +3,7 @@
         <h4>{{period_name}}</h4>
         <hr>
         <a class="btn btn-outline-success" href="#!/">Home</a>
-        <a class="btn btn-outline-success" ng-href="#!/home/qr-scanner/{{period_id}}">QR Scanner</a>
+        <a class="btn btn-outline-success" ng-href="#!/home/qr-scanner/{{period_id}}" ng-if="!isAdmin">QR Scanner</a>
     </div>
     <div class="card-body">
         <form name="date_range" novalidate>

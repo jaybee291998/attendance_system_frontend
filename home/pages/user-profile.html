@@ -68,7 +68,7 @@
                         <option value="">-- choose --</option>
                 </select>
             </div>
-            <div class="form-row align-items-center" ng-if="!isInstructor">
+            <div class="form-row align-items-center" ng-if="!isInstructor && !isAdmin">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="user_profile__year_level">Year Level</label>
                     <select class="form-select" 
@@ -82,7 +82,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form-row align-items-center" ng-if="!isInstructor">
+            <div class="form-row align-items-center" ng-if="!isInstructor && !isAdmin">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="user_profile__section">Section</label>
                     <select class="form-select" name="user_profile__section" ng-model="user.section" ng-change="section_change()" ng-disabled="disable_section_selection">
