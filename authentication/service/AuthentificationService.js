@@ -54,7 +54,7 @@
                 isAdminOrRedirect: isAdminOrRedirect,
                 setAllInstructors: setAllInstructors,
                 getAllInstructors: getAllInstructors,
-                fetchAllInstructors: fetchAllInstructors,
+                fetchAllMembers: fetchAllMembers,
                 isAllInstructorsSet: isAllInstructorsSet,
                 initAllInstructors: initAllInstructors
 
@@ -393,8 +393,8 @@
                     .then(succ, err);
             }
 
-            function fetchAllInstructors(succ, err){
-                return $http.get(`${myapi_link}/account/get-all-instructors/`)
+            function fetchAllMembers(role, succ, err){
+                return $http.get(`${myapi_link}/account/get-all-members/?role=${role}`)
                     .then(succ, err);
             }
 
@@ -412,7 +412,7 @@
 
             function initAllInstructors(){
                 console.warn("Init All Instructors");
-                let p = Authentication.fetchAllInstructors(succ, err);
+                let p = Authentication.fetchAllMembers('I', succ, err);
                 function succ(response){
                     let data = response.data;
                     Authentication.setAllInstructors(data);
