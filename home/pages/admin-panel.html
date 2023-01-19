@@ -24,7 +24,7 @@
         </div>
         <div ng-show="show_student_list">
             <h4>Student List</h4>
-            <div>
+            <div ng-show="show_filters">
                 <form>
                     <label for="search__first_name">first_name</label>
                     <input type="text" name="search__first_name" ng-model="filter_variables.first_name" ng-change="filter()">

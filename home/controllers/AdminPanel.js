@@ -26,7 +26,7 @@
         $scope.is_selected_prof_ins = false;
         $scope.is_selected_prof_req = false;
 
-        $scope.show_filters = true;
+        $scope.show_filters = false;
 
         $scope.instructors = [];
         $scope.students = []
