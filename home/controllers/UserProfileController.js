@@ -43,7 +43,8 @@
                 const succ = response => {
                     console.log(response.data);
                     let last_request = response.data.at(-1);
-                    if(last_request.status === 'P') $scope.show_pending_message = true;
+                    // if(last_request.length === 0)
+                    if(last_request != null && last_request.status === 'P') $scope.show_pending_message = true;
                     else $scope.show_request_instructorship = true;
                 }
                 const err = response => {

@@ -59,7 +59,9 @@
                 initAllInstructors: initAllInstructors,
                 fetchInstructorshipRequest: fetchInstructorshipRequest,
                 requestInstructorship: requestInstructorship,
-                postStatusRequest: postStatusRequest
+                postStatusRequest: postStatusRequest,
+                unsetCookie: unsetCookie,
+                unsetUserCookies: unsetUserCookies,
 
             }
 
@@ -440,6 +442,15 @@
             function postStatusRequest(request_id, status, succ, err){
                 return $http.put(`${myapi_link}/account/request-instructorship-detail/${request_id}/?status=${status}`)
                     .then(succ, err);
+            }
+
+            function unsetCookie(cookie_name){
+                $cookies.remove(cookie_name);
+            }
+
+            function unsetUserCookies(){
+                Authentication.unsetCookie('periods');
+
             }
         }
 })();
