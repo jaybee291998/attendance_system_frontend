@@ -1,0 +1,192 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Admin Panel</h4>
+    </div>
+    <div class="alert alert-danger" ng-if="page_error">
+        {{page_error | json}}
+    </div>
+    <div class="card-body">
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <button class="btn btn-outline-success" ng-click="show_stud_list()">Student List</button>
+                <button class="btn btn-outline-success" ng-click="show_ins_list()">Instructor List</button>
+                <button class="btn btn-outline-success" ng-click="show_req_list()">Instructorship Request</button>
+            </form>
+        </nav>
+        <hr>
+        <div ng-show="show_instructorship_list">
+            <h4>Instructorship Requests</h4>
+            <table class="table table-striped">
+                <tr ng-repeat="request in instructorship_requests" ng-click="test(request.requestee, request.id)">
+                    <td>{{request.full_name}}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="show_student_list">
+            <h4>Student List</h4>
+            <div>
+                <form>
+                    <label for="search__first_name">first_name</label>
+                    <input type="text" name="search__first_name" ng-model="filter_variables.first_name" ng-change="filter()">
+                    <label for="search__last_name">last_name</label>
+                    <input type="text" name="search__last_name" ng-model="filter_variables.last_name" ng-change="filter()">
+
+                    <label class="" for="user_profile__year_level">Year Level</label>
+                    <select class=""  
+                    ng-model="filter_variables.year_level" 
+                    ng-change="year_filter_change()"
+                    required>
+                        <option value="none">-- choose --</option>
+                        <option ng-repeat="year_level in year_levels" value={{year_level.id}}>{{year_level.name}}</option>
+                    </select>
+
+                    <label class="" for="user_profile__section">Section</label>
+                    <select class="" name="user_profile__section" ng-model="filter_variables.section" 
+                        ng-disabled="section_filter_disabled" ng-change="filter()">
+                        <option value="none">-- choose -- </option>
+                        <option ng-repeat="section in valid_sections_for_filter" value={{section.id}}>{{section.name}}</option>
+                    </select>
+
+                    <!-- <button class="btn btn-primary" ng-click="filter()">Search</button> -->
+                </form>
+
+            </div>
+            <table class="table table-striped">
+                <tr ng-repeat="student in filtered_students" ng-click="test(student.user)">
+                    <td>{{student.first_name}}</td>
+                    <td>{{student.last_name}}</td>
+                    <td>{{student.last_name}}</td>
+                    <td>{{student.age}}</td>
+                    <td>{{student.address.slice(0,20)}}...</td>
+                    <td>{{student.year_level_name}}</td>
+                    <td>{{student.section_name}}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="show_instructor_list">
+            <h4>Instrucstor List</h4>
+            <table class="table table-striped">
+                <tr ng-repeat="ins in instructors" ng-click="test(ins.user)">
+                    <td>{{ins.first_name}}</td>
+                    <td>{{ins.last_name}}</td>
+                    <td>{{ins.last_name}}</td>
+                    <td>{{ins.age}}</td>
+                    <td>{{ins.address.slice(0,20)}}...</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="show_profile">
+            <h4>Profile</h4>
+            <div class="alert alert-warning" ng-if="is_selected_prof_req">
+                <div class="d-flex justify-content-center">
+                    <p>Would you like to Accept or Reject this instructorship reuqest?</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="mx-2">
+                        <button class="btn btn-success" ng-click="accept()">Accept</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" ng-click="reject()">Reject</button>
+                    </div>
+                </div>
+            </div>
+            <form name="userForm" novalidate>
+                <div class="form-group row mb-2">
+                    <label for="user_profile__first_name" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__first_name" placeholder="first name" 
+                        ng-model="user.first_name" 
+                        ng-disabled="true"
+                        required>
+                    </div>
+                </div>
+            
+                <div class="form-group row mb-2">
+                    <label for="register__last_name" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__last_name" placeholder="last name" 
+                    ng-model="user.last_name" 
+                    ng-disabled="true"
+                    required>
+                    </div>
+                </div>
+            
+                <div class="form-group row mb-2">
+                    <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__middle_name" placeholder="middle name" 
+                    ng-model="user.middle_name" 
+                    ng-disabled="true"
+                    required>
+                    </div>
+                </div>
+            
+                <div class="form-group row mb-2">
+                    <label for="register__age" class="col-sm-2 col-form-label">Age</label>
+                    <div class="col-sm-10">
+                    <input type="number" class="form-control" name="user_profile__age" placeholder="age" 
+                    ng-model="user.age" 
+                    ng-disabled="true"
+                    required>
+                    </div>
+                </div>
+            
+                <div class="form-group row mb-2">
+                    <label for="register__address" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__address" placeholder="address" 
+                    ng-model="user.address"
+                    ng-disabled="true" 
+                    required>
+                    </div>
+                </div>
+            
+                <div class="form-group row mb-2">
+                    <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__phone" placeholder="phone" 
+                    ng-model="user.phone"
+                    ng-disabled="true"
+                    required>
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2" for="user_profile__sex">Sex</label>
+                    <select class="form-select" 
+                        name="register__sex" 
+                        ng-model="user.SexChoices"
+                        ng-options="sex_choice.id as sex_choice.name for sex_choice in sex_choices"
+                        ng-disabled="true"
+                        required>
+                            <option value="">-- choose --</option>
+                    </select>
+                </div>
+                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="user_profile__year_level">Year Level</label>
+                        <select class="form-select" 
+                        name="user_profile__year_level" 
+                        ng-model="user.year_level" 
+                        ng-change="year_select()"
+                        ng-disabled="true"
+                        required>
+                            <!-- <option value="">-- choose --</option> -->
+                        <!-- <option selected>Choose...</option> -->
+                        <option ng-repeat="year_level in year_levels" value={{year_level.id}}>{{year_level.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="user_profile__section">Section</label>
+                        <select class="form-select" name="user_profile__section" ng-model="user.section" ng-change="section_change()" ng-disabled="true">
+                        <!-- <option selected>Choose...</option> -->
+                        <option ng-repeat="section in valid_sections" value={{section.id}}>{{section.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <button class="btn btn-info" ng-click="back()">back</button>
+        </div>
+    </div>
+</div>

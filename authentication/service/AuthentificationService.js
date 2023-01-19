@@ -56,7 +56,10 @@
                 getAllInstructors: getAllInstructors,
                 fetchAllMembers: fetchAllMembers,
                 isAllInstructorsSet: isAllInstructorsSet,
-                initAllInstructors: initAllInstructors
+                initAllInstructors: initAllInstructors,
+                fetchInstructorshipRequest: fetchInstructorshipRequest,
+                requestInstructorship: requestInstructorship,
+                postStatusRequest: postStatusRequest
 
             }
 
@@ -422,6 +425,21 @@
                 function err(response){
                     console.error(response);
                 }
+            }
+
+            function fetchInstructorshipRequest(succ, err){
+                return $http.get(`${myapi_link}/account/request-instructorship-list/`)
+                    .then(succ, err);
+            }
+
+            function requestInstructorship(succ, err){
+                return $http.post(`${myapi_link}/account/request-instructorship-list/`)
+                .then(succ, err);
+            }
+
+            function postStatusRequest(request_id, status, succ, err){
+                return $http.put(`${myapi_link}/account/request-instructorship-detail/${request_id}/?status=${status}`)
+                    .then(succ, err);
             }
         }
 })();

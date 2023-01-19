@@ -52,6 +52,10 @@
                 controller: 'PeriodController',
                 templateUrl: 'home/pages/period.html'
             })
+            .when('/home/admin/',{
+                controller: 'AdminPanelController',
+                templateUrl: 'home/pages/admin-panel.html'
+            })
             .otherwise('/');
     }
 })();

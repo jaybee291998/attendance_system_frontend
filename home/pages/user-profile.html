@@ -2,6 +2,12 @@
     <div class="card-header">
         <h5 class="card-title">Profile</h5>
     </div>
+    <div ng-show="page_error" class="alert alert-danger">
+        {{page_error | json}}
+    </div>
+    <div ng-if="show_pending_message" class="alert alert-info">
+        <p>Your request is pending for approval. The request is approved if your role has been set to an Instructor.</p>
+    </div>
     <div class="card-body">
         <div ng-show="error">{{error | json}}</div>
         <form name="userForm" novalidate>
@@ -94,6 +100,7 @@
             <div class="form-group row">
                 <div class="col-sm-10">
                     <button  class="btn btn-primary" ng-click="update_profile()" ng-disabled="userForm.$invalid">Update Profile</button>
+                    <button class="btn btn-info " ng-if="show_request_instructorship" ng-click="requestInstructorship()">Request Instructorship</button>
                 </div>
             </div>
         </form>
