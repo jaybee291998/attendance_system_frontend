@@ -55,12 +55,12 @@
 
         function first_name_filter(first_name){
             if($scope.filter_variables.first_name === "") return true;
-            return first_name.toLowerCase().match($scope.filter_variables.first_name);
+            return first_name.toLowerCase().match($scope.filter_variables.first_name.toLowerCase());
         }
 
         function last_name_filter(last_name){
             if($scope.filter_variables.last_name === "") return true;
-            return last_name.toLowerCase().match($scope.filter_variables.last_name);
+            return last_name.toLowerCase().match($scope.filter_variables.last_name.toLowerCase());
         }
 
         function year_level_filter(year_level){
