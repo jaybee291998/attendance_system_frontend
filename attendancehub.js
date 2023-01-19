@@ -33,8 +33,7 @@
             console.log("Authenticated");
             console.log(Authentication.getAuthenticatedAccount());
             if(Authentication.isInstructor() || Authentication.isAdmin()){
-                Authentication.setVerified();
-                Authentication.initSubjects();
+                Authentication.setVerified();   
                 Authentication.initPeriods();
                 
             }
@@ -44,6 +43,7 @@
         }else{
             console.log("Not Authenticated");
         }
+        Authentication.initSubjects();
         Authentication.fetchYearSection()
         .then(response => {
             if(response.status >= 200 || response.status <= 299){
