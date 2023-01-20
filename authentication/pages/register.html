@@ -103,11 +103,11 @@
                 <div class="form-group row mb-2">
                     <label for="register__address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__address" placeholder="address" 
+                      <input type="text" class="form-control" name="register__address" placeholder="address" 
                       ng-model="user.address"
                       ng-minlength="10" ng-maxlength="256"  
                       required>
-                      <div ng-messages="registerForm.register__last_name.$dirty && registerForm.register__last_name.$error">
+                      <div ng-messages="registerForm.register__address.$dirty && registerForm.register__address.$error">
                         <div ng-messages-include="error-messages"></div>
                       </div>
                     </div>
