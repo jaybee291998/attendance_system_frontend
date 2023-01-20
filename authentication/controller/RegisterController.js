@@ -15,6 +15,8 @@
 
             let vm = this;
 
+            $scope.regex = "^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$";
+
             vm.register = register;
             $scope.page_error = null;
             $scope.year_levels = [];
@@ -51,24 +53,6 @@
             $scope.section_change = () => {
                 
             }
-
-            // function register(){
-            //     console.log($scope.user);
-            //     if(validateForm()){
-            //         let p = Authentication.register(vm.email, vm.password);
-            //         p.then(function(response){
-            //             if(response.status < 200 || response.status > 299){
-            //                 // error
-            //                 $scope.error = response.data;
-            //             }else{
-            //                 console.log("success");
-            //                 $scope.message = `account with email ${response.data.email}`;
-            //                 Authentication.login(vm.email, vm.password)
-            //                 .then(Authentication.updateUserProfile($scope.user));
-            //             }
-            //         })
-            //     } 
-            // }
 
             function register(){
                 console.log($scope.user);

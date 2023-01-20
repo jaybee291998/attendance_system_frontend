@@ -8,6 +8,12 @@
     <div ng-if="show_pending_message" class="alert alert-info">
         <p>Your request is pending for approval. The request is approved if your role has been set to an Instructor.</p>
     </div>
+    <script type="text/ng-template" id="error-messages">
+        <div ng-message='pattern' class='text-danger'>Please enter a valid phone number</div>
+        <div ng-message='required' class='text-danger'>This field is reuired</div>
+        <div ng-message='minlength' class='text-danger'>Too short</div>
+        <div ng-message='maxlength' class='text-danger'>Too long</div>
+      </script>
     <div class="card-body">
         <div ng-show="error">{{error | json}}</div>
         <form name="userForm" novalidate>
@@ -16,7 +22,11 @@
                 <div class="col-sm-10">
                 <input type="text" class="form-control" name="user_profile__first_name" placeholder="first name" 
                     ng-model="user.first_name" 
+                    ng-minlength="3" ng-maxlength="30" 
                     required>
+                    <div ng-messages="userForm.user_profile__first_name.$dirty && userForm.user_profile__first_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
                 </div>
             </div>
         
@@ -25,43 +35,62 @@
                 <div class="col-sm-10">
                 <input type="text" class="form-control" name="user_profile__last_name" placeholder="last name" 
                 ng-model="user.last_name" 
+                ng-minlength="3" ng-maxlength="30"
                 required>
+                <div ng-messages="userForm.user_profile__last_name.$dirty && userForm.user_profile__last_name.$error">
+                    <div ng-messages-include="error-messages"></div>
+                </div>
                 </div>
             </div>
         
             <div class="form-group row mb-2">
                 <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_profile__middle_name" placeholder="middle name" 
-                ng-model="user.middle_name" 
-                required>
+                    <input type="text" class="form-control" name="user_profile__middle_name" placeholder="middle name" 
+                    ng-model="user.middle_name" 
+                    ng-minlength="3" ng-maxlength="30"
+                    required>
+                    <div ng-messages="userForm.user_profile__middle_name.$dirty && userForm.user_profile__middle_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
                 </div>
             </div>
         
             <div class="form-group row mb-2">
                 <label for="register__age" class="col-sm-2 col-form-label">Age</label>
                 <div class="col-sm-10">
-                <input type="number" class="form-control" name="user_profile__age" placeholder="age" 
-                ng-model="user.age" 
-                required>
+                    <input type="number" class="form-control" name="user_profile__age" placeholder="age" 
+                    ng-model="user.age" 
+                    required>
+                    <div ng-messages="userForm.user_profile__age.$dirty && userForm.user_profile__age.$error">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
                 </div>
             </div>
         
             <div class="form-group row mb-2">
                 <label for="register__address" class="col-sm-2 col-form-label">Address</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_profile__address" placeholder="address" 
-                ng-model="user.address" 
-                required>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__address" placeholder="address" 
+                    ng-model="user.address" 
+                    ng-minlength="10" ng-maxlength="256"
+                    required>
+                    <div ng-messages="userForm.user_profile__address.$dirty && userForm.user_profile__address.$error">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
                 </div>
             </div>
         
             <div class="form-group row mb-2">
                 <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_profile__phone" placeholder="phone" 
-                ng-model="user.phone"
-                required>
+                    <input type="text" class="form-control" name="user_profile__phone" placeholder="phone" 
+                    ng-model="user.phone"
+                    ng-pattern="/^\d{11}$/"
+                    required>
+                    <div ng-messages="userForm.user_profile__phone.$dirty && userForm.user_profile__phone.$error">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-auto my-1">

@@ -1,5 +1,10 @@
 <div class="pl-10 pl-10">
-
+  <script type="text/ng-template" id="error-messages">
+    <div ng-message='pattern' class='text-danger'>Please enter a valid phone number</div>
+    <div ng-message='required' class='text-danger'>This field is reuired</div>
+    <div ng-message='minlength' class='text-danger'>Too short</div>
+    <div ng-message='maxlength' class='text-danger'>Too long</div>
+  </script>
     <div class="card">
 	    <div class="card-header">
 	        <h5 class="card-title">Registration</h5>
@@ -12,8 +17,8 @@
                 <div class="form-group row mb-2">
                   <label for="register__email" class="col-sm-2 col-form-label">Email</label>
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="register__email" placeholder="Email" 
-                    ng-model="vm.email" 
+                    <input type="email" class="form-control" name="register__email" placeholder="Email" 
+                    ng-model="vm.email"
                     required>
                   </div>
                 </div>
@@ -21,18 +26,26 @@
                 <div class="form-group row mb-2">
                   <label for="register__password" class="col-sm-2 col-form-label">Password</label>
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="register__password" placeholder="Password" 
+                    <input type="password" class="form-control" name="register__password" placeholder="Password" 
                     ng-model="vm.password"
+                    ng-minlength="12" ng-maxlength="30"
                     required>
+                    <div ng-messages="registerForm.register__password.$dirty && registerForm.register__password.$error">
+                      <div ng-messages-include="error-messages"></div>
+                    </div>
                   </div>
                 </div>
     
                 <div class="form-group row mb-2">
                     <label for="register__confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control" id="register__confirm_password" placeholder="Confirm Password"  
+                      <input type="password" class="form-control" name="register__confirm_password" placeholder="Confirm Password"  
                       ng-model="vm.confirmPassword"
+                      ng-minlength="12" ng-maxlength="30"
                       required>
+                      <div ng-messages="registerForm.register__confirm_password.$dirty && registerForm.register__confirm_password.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
     
@@ -41,34 +54,49 @@
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__first_name" placeholder="first name" 
                       ng-model="user.first_name" 
+                      ng-minlength="3" ng-maxlength="30" 
                       required>
+                      <div ng-messages="registerForm.register__first_name.$dirty && registerForm.register__first_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
     
                 <div class="form-group row mb-2">
                     <label for="register__last_name" class="col-sm-2 col-form-label">Last Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__last_name" placeholder="last name" 
+                      <input type="text" class="form-control" name="register__last_name" placeholder="last name" 
                       ng-model="user.last_name" 
+                      ng-minlength="3" ng-maxlength="30" 
                       required>
+                      <div ng-messages="registerForm.register__last_name.$dirty && registerForm.register__last_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
     
                 <div class="form-group row mb-2">
                     <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__middle_name" placeholder="middle name" 
+                      <input type="text" class="form-control" name="register__middle_name" placeholder="middle name" 
                       ng-model="user.middle_name" 
+                      ng-minlength="3" ng-maxlength="30" 
                       required>
+                      <div ng-messages="registerForm.register__middle_name.$dirty && registerForm.register__middle_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
     
                 <div class="form-group row mb-2">
                     <label for="register__age" class="col-sm-2 col-form-label">Age</label>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" id="register__age" placeholder="age" 
+                      <input type="number" class="form-control" name="register__age" placeholder="age" 
                       ng-model="user.age" 
                       required>
+                      <div ng-messages="registerForm.register__age.$dirty && registerForm.register__age.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
     
@@ -76,17 +104,25 @@
                     <label for="register__address" class="col-sm-2 col-form-label">Address</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="register__address" placeholder="address" 
-                      ng-model="user.address" 
+                      ng-model="user.address"
+                      ng-minlength="10" ng-maxlength="256"  
                       required>
+                      <div ng-messages="registerForm.register__last_name.$dirty && registerForm.register__last_name.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
 
                 <div class="form-group row mb-2">
                     <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="register__phone" placeholder="phone" 
+                      <input type="text" class="form-control" name="register__phone" placeholder="phone" 
                       ng-model="user.phone"
+                      ng-pattern="/^\d{11}$/"
                        required>
+                      <div ng-messages="registerForm.register__phone.$dirty && registerForm.register__phone.$error">
+                        <div ng-messages-include="error-messages"></div>
+                      </div>
                     </div>
                 </div>
                 <div class="col-auto my-1">
