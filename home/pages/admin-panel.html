@@ -55,7 +55,7 @@
                 <tr ng-repeat="student in filtered_students" ng-click="test(student.user)">
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
-                    <td>{{student.last_name}}</td>
+                    <td>{{student.middle_name}}</td>
                     <td>{{student.age}}</td>
                     <td>{{student.address.slice(0,20)}}...</td>
                     <td>{{student.year_level_name}}</td>
@@ -69,7 +69,7 @@
                 <tr ng-repeat="ins in instructors" ng-click="test(ins.user)">
                     <td>{{ins.first_name}}</td>
                     <td>{{ins.last_name}}</td>
-                    <td>{{ins.last_name}}</td>
+                    <td>{{ins.middle_name}}</td>
                     <td>{{ins.age}}</td>
                     <td>{{ins.address.slice(0,20)}}...</td>
                 </tr>
