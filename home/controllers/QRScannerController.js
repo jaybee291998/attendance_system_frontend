@@ -110,6 +110,8 @@
             $scope.$apply();
         }
 
+        $scope.back = () => {$location.path(`/home/attendance-sheet/${$scope.period_id}`);}
+
         function setQrError(error){
             $scope.qr_error = error;
             $timeout(()=>{

@@ -13,8 +13,9 @@
             $scope.account = Authentication.getAuthenticatedAccount()['account_details']['email'];
             if(Authentication.isInstructor() || Authentication.isAdmin()){
                 if(!Authentication.isAllInstructorsSet()) Authentication.initAllInstructors();
+                // if(!Authentication.isVerifiedUsersLoaded()) Authentication.setVerified();
                 Authentication.setVerifiedOnce();
-                Authentication.initPeriodsOnce();
+                // Authentication.initPeriodsOnce();
                 let year_section = Authentication.getYearSection();
                 $scope.year_levels = year_section.year_levels;
                 $scope.sections = year_section.sections;
@@ -33,12 +34,22 @@
                             return new_periods;
                         });
                         console.log($scope.named_periods);
+                        // $scope.$apply();
                     }
     
                     function err(response){
                         console.error(response);
                     }
-                } //Authentication.initPeriods();
+                }else{
+                    $scope.my_periods = Authentication.getPeriods();
+    
+                    $scope.named_periods = $scope.my_periods.map(period => {
+                        let new_periods = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
+                        new_periods['id'] = period.id;
+                        return new_periods;
+                    });
+                    console.log($scope.named_periods);
+                }
 
             }; 
             vm.logout = logout;
