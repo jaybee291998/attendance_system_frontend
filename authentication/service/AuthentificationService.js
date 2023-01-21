@@ -133,7 +133,7 @@
 
             function authenticatedOrRedirect(){
                 let isAuthenticated = Authentication.isAuthenticated();
-                if(!isAuthenticated) $location.path('/login');
+                if(!isAuthenticated) $location.path('/ict');
                 return !isAuthenticated;
 
             }

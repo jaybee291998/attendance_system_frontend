@@ -60,7 +60,7 @@
             function logout(){
                 Authentication.unAuthenticate();
                 Authentication.unsetUserCookies();
-                $location.path('/login');
+                $location.path('/ict');
             }
 
             $scope.year_level_select = (id) => {

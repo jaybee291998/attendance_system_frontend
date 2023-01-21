@@ -56,6 +56,9 @@
                 controller: 'AdminPanelController',
                 templateUrl: 'home/pages/admin-panel.html'
             })
+            .when('/ict',{
+                templateUrl: 'authentication/pages/spict.html'
+            })
             .otherwise('/');
     }
 })();

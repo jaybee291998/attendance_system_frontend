@@ -234,3 +234,22 @@ li{
         height: 200px;
     }
 } */
+
+.centered {
+    margin-top: 100px;
+}
+.p1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 9vw;
+}
+
+.p2 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 4vw;
+}
+
+.p3 {
+    margin-top: 15vw;
+    font-family: "Times New Roman", Times, serif;
+    /* font-size: 4vw; */
+}
