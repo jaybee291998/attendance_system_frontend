@@ -59,7 +59,7 @@
 
             function logout(){
                 Authentication.unAuthenticate();
-                Authentication.unsetUserCookies();
+                Authentication.unsetUserSession();
                 $location.path('/ict');
             }
 

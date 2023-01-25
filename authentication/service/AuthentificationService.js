@@ -60,8 +60,8 @@
                 fetchInstructorshipRequest: fetchInstructorshipRequest,
                 requestInstructorship: requestInstructorship,
                 postStatusRequest: postStatusRequest,
-                unsetCookie: unsetCookie,
-                unsetUserCookies: unsetUserCookies,
+                unsetSession: unsetSession,
+                unsetUserSession: unsetUserSession,
 
             }
 
@@ -170,19 +170,18 @@
             }
 
             function setYearSection(year_levels, sections){
-                let expireDate = new Date();
                 let data = {
                     year_levels: year_levels,
                     sections: sections
                 };
-                expireDate.setDate(expireDate.getDate() + 1);
-                $cookies.putObject('year_section', data, {'expires':expireDate});
+                let str = JSON.stringify(data);
+                sessionStorage.setItem('year_section', str);
             }
 
             function getYearSection(){
-                let year_section = $cookies.getObject('year_section');
+                let year_section = sessionStorage.getItem('year_section');
                 if(!year_section) return;
-                return year_section;
+                return JSON.parse(year_section);
             } 
 
             function isInstructorOrRedirect(){
@@ -234,37 +233,35 @@
             }
 
             function setVerifiedUsers(verifiedUsers){
-                let expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 2);
-                $cookies.putObject('verifiedUsers', verifiedUsers, {'expires':expireDate});
+                let verifiedUsersStr = JSON.stringify(verifiedUsers);
+                sessionStorage.setItem('verifiedUsers', verifiedUsersStr);
             }
 
             function getVerifiedUser(){
-                let verifiedUsers = $cookies.getObject('verifiedUsers');
+                let verifiedUsers = sessionStorage.getItem('verifiedUsers');
                 if(!verifiedUsers) return;
-                return verifiedUsers;
+                return JSON.parse(verifiedUsers);
             }
 
-            function isCookieSet(cookie_name){
-                let cookie = $cookies.getObject(cookie_name);
-                if(cookie) return true;
+            function isSessionSet(cookie_name){
+                let session = sessionStorage.getItem(cookie_name);
+                if(session) return true;
                 return false;
             }
 
-            function setCookie(cookie_name, data){
-                let expireDate = new Date();
-                expireDate.setDate(expireDate.getDate() + 2);
-                $cookies.putObject(cookie_name, data, expireDate);
+            function setSession(cookie_name, data){
+                let data_str = JSON.stringify(data);
+                sessionStorage.setItem(cookie_name, data_str);
             }
 
-            function getCookie(cookie_name){
-                let cookie = $cookies.getObject(cookie_name);
-                if(!cookie) return;
-                return cookie;
+            function getSession(cookie_name){
+                let session = sessionStorage.getItem(cookie_name);
+                if(!session) return;
+                return JSON.parse(session);
             }
 
             function isVerifiedUsersLoaded(){
-                let verifiedUsers = $cookies.getObject('verifiedUsers');
+                let verifiedUsers = sessionStorage.getItem('verifiedUsers');
                 if(verifiedUsers) return true;
                 return false;
             }
@@ -292,15 +289,15 @@
             }
 
             function setSubjects(subjects){
-                setCookie('subjects', subjects);
+                setSession('subjects', subjects);
             }
 
             function getSubjects(){
-                return getCookie('subjects');
+                return getSession('subjects');
             }
 
             function isSubjectSet(){
-                return isCookieSet('subjects');
+                return isSessionSet('subjects');
             }
 
             function fetchSubjects(){
@@ -334,15 +331,15 @@
             }
 
             function setPeriods(periods){
-                setCookie('periods', periods);
+                setSession('periods', periods);
             }
 
             function getPeriods(){
-                return getCookie('periods');
+                return getSession('periods');
             }
 
             function isPeriodSet(){
-                return isCookieSet('periods');
+                return isSessionSet('periods');
             }
 
             function initPeriods(){
@@ -404,15 +401,15 @@
             }
 
             function setAllInstructors(all_instructors){
-                setCookie('allInstructors', all_instructors);
+                setSession('allInstructors', all_instructors);
             }
 
             function getAllInstructors(){
-                return getCookie('allInstructors');
+                return getSession('allInstructors');
             }
 
             function isAllInstructorsSet(){
-                return isCookieSet('allInstructors');
+                return isSessionSet('allInstructors');
             }
 
             function initAllInstructors(){
@@ -444,12 +441,12 @@
                     .then(succ, err);
             }
 
-            function unsetCookie(cookie_name){
-                $cookies.remove(cookie_name);
+            function unsetSession(cookie_name){
+                sessionStorage.removeItem(cookie_name);
             }
 
-            function unsetUserCookies(){
-                Authentication.unsetCookie('periods');
+            function unsetUserSession(){
+                Authentication.unsetSession('periods');
 
             }
         }
