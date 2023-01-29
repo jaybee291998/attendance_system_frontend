@@ -24,12 +24,23 @@
 
         console.log($scope.section);
 
+        let my_profile = Authentication.getAuthenticatedAccount()['account_details'];
+        let my_fullname = `${my_profile['first_name']} ${my_profile['last_name']}`;
+
         $scope.section_periods = $scope.periods.filter(period => period.section === $scope.section.id);
         $scope.named_periods = $scope.section_periods.map(period => {
             let new_periods = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
             new_periods['id'] = period.id;
+            // there is a bug that when the instructor became a head teaher we can nolonger access the teacher name
+            // since the teacher is no longer on the teacher list
             let ins = all_instructors.filter(instructor => instructor.user === period.instructor)[0];
-            new_periods['instructor_name'] = `${ins.first_name} ${ins.last_name}`
+            if(ins){
+                new_periods['instructor_name'] = `${ins.first_name} ${ins.last_name}`
+            }else{
+                // just assume that the instructor is the head teacher
+                new_periods['instructor_name'] = my_fullname;
+            }
+            
             return new_periods;
         });
         console.log($scope.named_periods);
