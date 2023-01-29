@@ -24,7 +24,7 @@
 
         console.log($scope.section);
 
-        let my_profile = Authentication.getAuthenticatedAccount()['account_details'];
+        let my_profile = Authentication.getAuthenticatedAccount()['profile'];
         let my_fullname = `${my_profile['first_name']} ${my_profile['last_name']}`;
 
         $scope.section_periods = $scope.periods.filter(period => period.section === $scope.section.id);
