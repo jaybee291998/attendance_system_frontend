@@ -30,6 +30,9 @@
                     <tr ng-repeat="table_row in table_body">
                         <td ng-repeat="data in table_row track by $index" class="text-center">{{data}} </td>
                     </tr>
+                    <tr>
+                        <td ng-repeat="sum in summary track by $index" class="text-center">{{sum}}</td>
+                    </tr>
                 </tbody>
             </table>
             <button class="btn btn-primary" ng-click="export_to_excel('xlsx')">Download Excel</button>

@@ -62,9 +62,10 @@
                 return 0;
             });
             console.log(sorted_student_list);
-            let {table_header, table_body} = generateTableData(user_attendance, date_range, sorted_student_list);
+            let {table_header, table_body, summary} = generateTableData(user_attendance, date_range, sorted_student_list);
             $scope.table_headers = table_header;
             $scope.table_body = table_body;
+            $scope.summary = summary;
         }
         
         $scope.checkify = (d) => {
@@ -79,6 +80,7 @@
             });
 
             let table_body = [];
+            let summary = ["summary"];
             student_list.forEach(student_name => {
                 let user = user_attendance[student_name];
                 // console.log(user);
@@ -89,7 +91,7 @@
                     for(let i = 0; i < user.length; i++){
                         // console.log(user[i]);
                         if(user[i]['date'].getDate() === date.getDate()){
-                            console.log(user[i]);
+                            // console.log(user[i]);
                             found = true;
                             status = user[i]['status'];
                             break;
@@ -103,9 +105,21 @@
                 });
                 table_body.push(table_row);
             });
+
+            for(let col = 1; col < table_header.length; col++){
+                let total = 0;
+                for(let row = 0; row < table_body.length; row++){
+                    let stat = table_body[row][col];
+                    if(stat == 'P') total++;
+                }
+                summary.push(`(${total} / ${table_body.length})`);
+            }
             console.log(table_header);
             console.log(table_body);
-            return {table_header: table_header, table_body: table_body};
+            console.log(summary);
+
+
+            return {table_header: table_header, table_body: table_body, summary:summary};
         }
 
         $scope.err = response => {
