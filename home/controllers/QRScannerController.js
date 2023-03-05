@@ -15,6 +15,7 @@
         const verifiedUsers = Authentication.getVerifiedUser();
         let scanned_qr_codes = [];
         $scope.scanned_names = [];
+        $scope.excused_names = [];
         $scope.qr_error = null;
         $scope.current_qr_code = null;
         $scope.current_qr_name = null;
@@ -65,6 +66,7 @@
         $scope.post_attendance = () => {
             console.log(scanned_qr_codes);
             $scope.show_student_list = false;
+            $scope.show_excused_student_list = false;
             $scope.show_options = false;
             scanner.stop();
             Authentication.postAttendanceRecords(scanned_qr_codes, $scope.period_id, $scope.succ, $scope.err);
@@ -72,7 +74,9 @@
 
         $scope.succ = response => {
             console.log(response);
-            $scope.valid_records = response.data.valid_records;
+            if(response.data.already_recorded.length != 0)$scope.already_recorded = response.data.already_recorded;
+            if(response.data.valid_records.length != 0)$scope.valid_records = response.data.valid_records;
+            if(response.data.excused_records.length != 0)$scope.excused_records = response.data.excused_records;
             if(response.data.failed.length != 0) $scope.invalid_records = response.data.failed;
         }
 
@@ -85,10 +89,14 @@
             $scope.stop();
             console.log(result);
             // console.log(`last result ${$scope.scanned_qr_codes.at(-1)}`)
+            let isExcused = result.data.length == 17;
+            if(isExcused) result.data = result.data.slice(0,16);
+
             if(result.data === scanned_qr_codes.at(-1)){
                 setQrError("QR code Scanned twice");                
                 return;
             }
+
             let d = verifiedUsers[result.data];
             console.log(d);
             if(!d)
@@ -103,11 +111,23 @@
                 return;
             }
 
-            $scope.current_qr_code = result.data;
-            $scope.current_qr_name = d[0];
+            // $scope.current_qr_code = result.data;
+            // $scope.current_qr_name = d[0];
 
-            $scope.show_prompt = true;
+            
+            if(isExcused){
+                $scope.excused_names.push(d[0]);
+                $scope.show_excused_student_list = true;
+                scanned_qr_codes.push(result.data+"0");
+            }else{
+                $scope.scanned_names.push(d[0]);
+                $scope.show_student_list = true;
+                scanned_qr_codes.push(result.data);
+            }
+            
+            // $scope.show_prompt = true;
             $scope.$apply();
+            // $scope.start();
         }
 
         $scope.back = () => {$location.path(`/home/attendance-sheet/${$scope.period_id}`);}

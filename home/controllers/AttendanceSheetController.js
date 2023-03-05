@@ -85,17 +85,20 @@
                 let table_row = [student_name];
                 date_range.forEach(date => {
                     let found = false;
+                    let status = "";
                     for(let i = 0; i < user.length; i++){
                         // console.log(user[i]);
-                        if(user[i].getDate() === date.getDate()){
+                        if(user[i]['date'].getDate() === date.getDate()){
+                            console.log(user[i]);
                             found = true;
+                            status = user[i]['status'];
                             break;
                         }
                     }
                     if(found){
-                        table_row.push(1);
+                        table_row.push(status);
                     }else{
-                        table_row.push(0);
+                        table_row.push('A');
                     }
                 });
                 table_body.push(table_row);
@@ -137,22 +140,25 @@
                 student_list.push(full_name);
 
             });
-
+            console.log({user_attendance: user_attendance, student_list: student_list});
             return {user_attendance: user_attendance, student_list: student_list};
         }
 
         // process a list of attendance records so that it will be dictionary with keys that is the user_profile
         function processAttendanceRecords(attendance_records){
+            console.log(attendance_records);
             let new_attendance_record = {};
             attendance_records.forEach(attendance_record => {
                 let new_date = new Date(attendance_record['timestamp'].slice(0, 10));
                 // console.log(attendance_record['timestamp'].slice(0, 10));
+                let new_data = {status:attendance_record['status'], date:new_date}
                 if(attendance_record['user_profile'] in new_attendance_record){
-                    new_attendance_record[attendance_record['user_profile']].push(new_date);
+                    new_attendance_record[attendance_record['user_profile']].push(new_data);
                 }else{
-                    new_attendance_record[attendance_record['user_profile']] = [new_date];
+                    new_attendance_record[attendance_record['user_profile']] = [new_data];
                 }
             });
+            console.log(new_attendance_record);
             return new_attendance_record;
         } 
 

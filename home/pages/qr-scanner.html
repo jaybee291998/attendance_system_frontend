@@ -28,8 +28,18 @@
             <ul>
                 <p ng-repeat="name in scanned_names">- {{name}}</p>
             </ul>
-            <button class="btn btn-primary" ng-click="post_attendance()">Post Attendance</button>
+            
         </div>
+
+        <div class="alert alert-secondary" ng-show="show_excused_student_list">
+            <h4>Excused Student to be Posted</h4>
+            <ul>
+                <p ng-repeat="name in excused_names">- {{name}}</p>
+            </ul>
+            <!-- <button class="btn btn-primary" ng-click="post_attendance()">Post Attendance</button> -->
+        </div>
+
+        <button ng-show="show_excused_student_list || show_student_list" class="btn btn-primary" ng-click="post_attendance()">Post Attendance</button>
 
         <div class="alert alert-success" ng-show="valid_records">
             <h4>Posted Successfully</h4>
@@ -42,6 +52,19 @@
             <h4>Post Failed</h4>
             <ul>
                 <p ng-repeat="invalid_record in invalid_records">* {{invalid_record}}</p>
+            </ul>
+        </div>
+        <div class="alert alert-warning" ng-show="excused_records">
+            <h4>Excused Records</h4>
+            <ul>
+                <p ng-repeat="excused_record in excused_records">/ {{excused_record}}</p>
+            </ul>
+        </div>
+
+        <div class="alert alert-dark" ng-show="already_recorded">
+            <h4>Students Already Recorded</h4>
+            <ul>
+                <p ng-repeat="record in already_recorded">/ {{record}}</p>
             </ul>
         </div>
 

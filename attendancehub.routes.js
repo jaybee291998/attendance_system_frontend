@@ -28,7 +28,7 @@
                 controller: 'UserProfileController',
                 templateUrl: 'home/pages/user-profile.html'
             })
-            .when('/home/qr-code/', {
+            .when('/home/qr-code/:mode', {
                 controller: 'QRController',
                 templateUrl: 'home/pages/qr-code.html'
             })

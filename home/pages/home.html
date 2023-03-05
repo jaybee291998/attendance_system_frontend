@@ -3,7 +3,8 @@
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
           <a class="btn btn-outline-success" href="#!/home/user-profile/">User Profile</a>
-          <a class="btn btn-outline-success" href="#!/home/qr-code/" ng-if="!isInstructor && !isAdmin">QR Code</a>
+          <a class="btn btn-outline-success" href="#!/home/qr-code/qr" ng-if="!isInstructor && !isAdmin">QR Code</a>
+          <a class="btn btn-outline-success" href="#!/home/qr-code/excuse" ng-if="!isInstructor && !isAdmin">Excuse QR</a>
           <a class="btn btn-outline-success" href="#!/home/create-period" ng-if="isInstructor">Create Period</a>
           <a class="btn btn-outline-success" href="#!/home/admin" ng-if="isAdmin">Admin</a>
           <a ng-click="vm.logout()" class="btn btn-outline-danger">Logout</a>
