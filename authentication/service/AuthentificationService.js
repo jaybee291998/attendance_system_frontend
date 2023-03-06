@@ -101,9 +101,9 @@
                 }
             }
 
-            function registerUserWithProfile(user, user_profile){
+            function registerUserWithProfile(user, user_profile, role){
                 let data = {user:user, user_profile:user_profile}
-                return $http.post(`${myapi_link}/account/register-with-profile/`, data)
+                return $http.post(`${myapi_link}/account/register-with-profile/?role=${role}`, data)
                 .then(response=>response, response=>response);
             }
 

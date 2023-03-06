@@ -16,17 +16,24 @@
             let vm = this;
 
             $scope.regex = "^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$";
-
             vm.register = register;
             $scope.page_error = null;
             $scope.year_levels = [];
             $scope.sections = [];
             $scope.valid_sections = [];
             $scope.user_profile = {};
+            $scope.dis = false;
+            // $scope.
             $scope.sex_choices = [
                 {id:'M', name:'Male'},
                 {id:'F', name:'Female'},
                 {id:'O', name:'Other'}
+            ];
+
+            $scope.role_choices = [
+                {id:'S', name:'Student'},
+                {id:'I', name:'Instructor'},
+                {id:'A', name:'Head Teacher'}
             ];
             $scope.disable_section_selection = true;
 
@@ -35,6 +42,8 @@
                     if(response.status >= 200 || response.status <= 299){
                         $scope.year_levels = response.data.year_levels;
                         $scope.sections = response.data.sections;
+                        $scope.year_levels.push({id:null, name:"none"});
+                        $scope.sections.push({id:null, name:"none"});
                         console.log($scope.year_levels);
                         console.log($scope.sections);
                     }else{
@@ -50,6 +59,23 @@
                 $scope.disable_section_selection = false;
             }
 
+            $scope.role_change = () => {
+                console.log($scope.user.role);
+                // $scope.user.sex = 'F';
+                if($scope.user.role == 'I' || $scope.user.role == 'A'){
+                    $scope.valid_sections = $scope.sections;
+                    $scope.user.year_level = null;
+                    $scope.user.section = null;
+                    $scope.dis = true;
+                }else{
+                    $scope.valid_sections = [];
+                    // $scope.user.year_level = null;
+                    // $scope.user.section = null;
+                    $scope.dis = false;   
+                }
+
+            }
+
             $scope.section_change = () => {
                 
             }
@@ -59,7 +85,7 @@
                 if(validateForm()){
                     let user = {email: vm.email, password: vm.password};
                     
-                    let p = Authentication.registerUserWithProfile(user, $scope.user);
+                    let p = Authentication.registerUserWithProfile(user, $scope.user, $scope.user.role);
                     p.then(function(response){
                         if(response.status < 200 || response.status > 299){
                             // error
