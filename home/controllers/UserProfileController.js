@@ -23,6 +23,7 @@
                 {id:'O', name:'Other'}
             ];
             $scope.show_request_instructorship = false;
+            $scope.show_request_head_teacher = false;
             $scope.show_pending_message = false;
 
             $scope.isInstructor = Authentication.isInstructor();
@@ -45,7 +46,10 @@
                     let last_request = response.data.at(-1);
                     // if(last_request.length === 0)
                     if(last_request != null && last_request.status === 'P') $scope.show_pending_message = true;
-                    else $scope.show_request_instructorship = true;
+                    else{
+                        $scope.show_request_instructorship = true;
+                        $scope.show_request_head_teacher = true;
+                    } 
                 }
                 const err = response => {
                     setPageError(response)
@@ -58,13 +62,28 @@
                     console.log(response);
                     $scope.show_pending_message = true;
                     $scope.show_request_instructorship = false;
+                    $scope.show_request_head_teacher = false;
                 }
 
                 const err = response => {
                     setPageError(response.data)
                 }
 
-                Authentication.requestInstructorship(succ, err);
+                Authentication.requestInstructorship(succ, err, 'I');
+            }
+            $scope.requestToBeHeadTeacher = () => {
+                const succ = response => {
+                    console.log(response);
+                    $scope.show_pending_message = true;
+                    $scope.show_request_head_teacher = false;
+                    $scope.show_request_instructorship = false;
+                }
+
+                const err = response => {
+                    setPageError(response.data)
+                }
+
+                Authentication.requestInstructorship(succ, err, 'A');
             }
 
             function setPageError(error){

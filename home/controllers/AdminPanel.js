@@ -14,21 +14,28 @@
         $scope.all_members = null;
         $scope.instructorship_requests_raw = null;
         $scope.instructorship_requests = null;
+        $scope.head_teacher_request_raw = null;
+        $scope.head_teacher_request = null;
         $scope.page_error = null;
         $scope.show_instructorship_list = false;
+        $scope.show_head_teacher_request_list = false;
         $scope.show_student_list = true;
         $scope.show_instructor_list = false;
+        $scope.show_head_teacher_list = false;
         $scope.show_profile = false;
 
         $scope.selected_profile_id = null; //
         $scope.selected_request_id = null;
         $scope.user = null;
         $scope.is_selected_prof_ins = false;
+        $scope.is_selected_prof_ht = false;
         $scope.is_selected_prof_req = false;
+        $scope.is_selected_ht_req = false;
 
         $scope.show_filters = false;
 
         $scope.instructors = [];
+        $scope.head_teachers = [];
         $scope.students = []
         $scope.filtered_students = [];
 
@@ -121,6 +128,7 @@
                     new_data['section_name'] = $scope.section_dict[m.section];
                     if(m.role === 'I') $scope.instructors.push(new_data);
                     else if(m.role == 'S') $scope.students.push(new_data);
+                    else if(m.role = 'A') $scope.head_teachers.push(new_data);
                     return new_data;
                 });
                 console.log($scope.all_members);
@@ -139,10 +147,15 @@
         function fetchAllInstructorshipRequest(){
             const succ = response => {
                 console.log("Instructorship Request:");
-                $scope.instructorship_requests_raw = response.data.filter(r => r.status == 'P');
+                $scope.instructorship_requests_raw = response.data.filter(r => r.status == 'P' && r.role=='I');
                 $scope.instructorship_requests = processRawInstructorship($scope.instructorship_requests_raw);
+                $scope.head_teacher_requests_raw = response.data.filter(r => r.status == 'P' && r.role=='A');
+                $scope.head_teacher_requests = processRawInstructorship($scope.head_teacher_requests_raw);
                 console.log($scope.instructorship_requests);
                 console.log($scope.instructorship_requests_raw);
+                // console.log($scope.instructorship_requests);
+                console.log($scope.head_teacher_requests);
+                console.log($scope.head_teacher_requests_raw);
             }
 
             const err = response => {
@@ -167,11 +180,12 @@
                 let requestee = $scope.all_members.filter(m => m.user === raw.requestee)[0];
                 new_request.full_name = `${requestee.first_name} ${requestee.last_name}`;
                 new_request.requestee = requestee.user;
+                new_request.role = raw.role;
                 return new_request;
             });
         }
 
-        $scope.test = (user_id, request_id) => {
+        $scope.test = (user_id, request_id, role) => {
             let d = {user_id: user_id, request_id:request_id};
             console.log(d);
             $scope.selected_profile_id = user_id;
@@ -181,15 +195,22 @@
 
             $scope.user.year_level = ""+$scope.user.year_level;
             $scope.user.section = ""+$scope.user.section;
-
+            $scope.is_selected_ht_req = false;
+            $scope.is_selected_prof_req = false;
             if(request_id){
-                $scope.is_selected_prof_req = true;
+                if(role=='A'){
+                    $scope.is_selected_ht_req = true;
+                }else{
+                    $scope.is_selected_prof_req = true;
+                }
+                
                 $scope.selected_request_id = request_id;
             } else {
                 $scope.is_selected_prof_req = false;
                 $scope.selected_request_id = null;
             }
             $scope.is_selected_prof_ins = $scope.user.role == 'I';
+            $scope.is_selected_prof_ht = $scope.user.role == 'A';
             $scope.show_prof();
             // console.log();
         }
@@ -199,6 +220,8 @@
             $scope.show_student_list = false;
             $scope.show_instructor_list = false;
             $scope.show_profile = false;
+            $scope.show_head_teacher_request_list = false;
+            $scope.show_head_teacher_list = false;
         }
 
         $scope.show_stud_list = () => {
@@ -206,6 +229,8 @@
             $scope.show_student_list = true;
             $scope.show_instructor_list = false;
             $scope.show_profile = false;
+            $scope.show_head_teacher_request_list = false;
+            $scope.show_head_teacher_list = false;
         }
 
         $scope.show_ins_list = () => {
@@ -213,6 +238,8 @@
             $scope.show_student_list = false;
             $scope.show_instructor_list = true;
             $scope.show_profile = false;
+            $scope.show_head_teacher_request_list = false;
+            $scope.show_head_teacher_list = false;
         }
 
         $scope.show_prof = () => {
@@ -220,6 +247,25 @@
             $scope.show_student_list = false;
             $scope.show_instructor_list = false;
             $scope.show_profile = true;
+            $scope.show_head_teacher_request_list = false;
+            $scope.show_head_teacher_list = false;
+        }
+        $scope.show_head_request = () => {
+            $scope.show_instructorship_list = false;
+            $scope.show_student_list = false;
+            $scope.show_instructor_list = false;
+            $scope.show_profile = false;
+            $scope.show_head_teacher_request_list = true;
+            $scope.show_head_teacher_list = false;
+        }
+
+        $scope.show_head_teachers = () => {
+            $scope.show_instructorship_list = false;
+            $scope.show_student_list = false;
+            $scope.show_instructor_list = false;
+            $scope.show_profile = false;
+            $scope.show_head_teacher_request_list = false;
+            $scope.show_head_teacher_list = true;
         }
 
         let post_status = (status) => {

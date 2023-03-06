@@ -431,8 +431,8 @@
                     .then(succ, err);
             }
 
-            function requestInstructorship(succ, err){
-                return $http.post(`${myapi_link}/account/request-instructorship-list/`)
+            function requestInstructorship(succ, err, role){
+                return $http.post(`${myapi_link}/account/request-instructorship-list/?role=${role}`)
                 .then(succ, err);
             }
 

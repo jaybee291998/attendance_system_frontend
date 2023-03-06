@@ -8,16 +8,18 @@
     <div class="card-body">
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-                <button class="btn btn-outline-success" ng-click="show_stud_list()">Student List</button>
-                <button class="btn btn-outline-success" ng-click="show_ins_list()">Instructor List</button>
+                <button class="btn btn-outline-success" ng-click="show_stud_list()">Students</button>
+                <button class="btn btn-outline-success" ng-click="show_ins_list()">Instructors</button>
+                <button class="btn btn-outline-success" ng-click="show_head_teachers()">Head Teachers</button>
                 <button class="btn btn-outline-success" ng-click="show_req_list()">Instructorship Request</button>
+                <button class="btn btn-outline-success" ng-click="show_head_request()">Head Teacher Request</button>
             </form>
         </nav>
         <hr>
         <div ng-show="show_instructorship_list">
             <h4>Instructorship Requests</h4>
             <table class="table table-striped">
-                <tr ng-repeat="request in instructorship_requests" ng-click="test(request.requestee, request.id)">
+                <tr ng-repeat="request in instructorship_requests" ng-click="test(request.requestee, request.id, request.role)">
                     <td>{{request.full_name}}</td>
                 </tr>
             </table>
@@ -75,11 +77,36 @@
                 </tr>
             </table>
         </div>
+
+        <div ng-show="show_head_teacher_request_list">
+            <h4>Head Teacher Request List</h4>
+            <table class="table table-striped">
+                <tr ng-repeat="ht_req in head_teacher_requests" ng-click="test(ht_req.requestee, ht_req.id, ht_req.role)">
+                    <td>{{ht_req.full_name}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div ng-show="show_head_teacher_list">
+            <h4>Head Teacher List</h4>
+            <table class="table table-striped">
+                <tr ng-repeat="head_teacher in head_teachers" ng-click="test(head_teacher.user)">
+                    <td>{{head_teacher.first_name}}</td>
+                    <td>{{head_teacher.last_name}}</td>
+                    <td>{{head_teacher.middle_name}}</td>
+                    <td>{{head_teacher.age}}</td>
+                    <td>{{head_teacher.address.slice(0,20)}}...</td>
+                </tr>
+            </table>
+        </div>
         <div ng-show="show_profile">
             <h4>Profile</h4>
-            <div class="alert alert-warning" ng-if="is_selected_prof_req">
-                <div class="d-flex justify-content-center">
-                    <p>Would you like to Accept or Reject this instructorship reuqest?</p>
+            <div class="alert alert-warning" ng-if="is_selected_prof_req || is_selected_ht_req">
+                <div class="d-flex justify-content-center" ng-if="is_selected_prof_req">
+                    <p>Would you like to Accept or Reject this Instructorship request?</p>
+                </div>
+                <div class="d-flex justify-content-center" ng-if="is_selected_ht_req">
+                    <p>Would you like to Accept or Reject this Head Teacher request?</p>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="mx-2">
@@ -161,7 +188,7 @@
                             <option value="">-- choose --</option>
                     </select>
                 </div>
-                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins">
+                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins && !is_selected_prof_ht && !is_selected_prof_req && !is_selected_ht_req">
                     <div class="col-auto my-1">
                         <label class="mr-sm-2" for="user_profile__year_level">Year Level</label>
                         <select class="form-select" 
@@ -176,7 +203,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins">
+                <div class="form-row align-items-center" ng-if="!is_selected_prof_ins && !is_selected_prof_ht && !is_selected_prof_req && !is_selected_ht_req">
                     <div class="col-auto my-1">
                         <label class="mr-sm-2" for="user_profile__section">Section</label>
                         <select class="form-select" name="user_profile__section" ng-model="user.section" ng-change="section_change()" ng-disabled="true">
