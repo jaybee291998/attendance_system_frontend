@@ -177,6 +177,16 @@
                     required>
                     </div>
                 </div>
+
+                <div class="form-group row mb-2" ng-if="!is_selected_prof_ins && !is_selected_prof_ht && !is_selected_prof_req && !is_selected_ht_req">
+                    <label for="register__lrn" class="col-sm-2 col-form-label">LRN</label>
+                    <div class="col-sm-10">
+                    <input type="text" class="form-control" name="user_profile__lrn" placeholder="LRN" 
+                    ng-model="user.lrn"
+                    ng-disabled="true"
+                    required>
+                    </div>
+                </div>
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="user_profile__sex">Sex</label>
                     <select class="form-select" 
