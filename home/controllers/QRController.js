@@ -24,7 +24,12 @@
 
         let year_level = $scope.year_levels.filter(year_level => year_level.id === parseInt($scope.user_profile.year_level))[0];
         let section = $scope.sections.filter(section => section.id === parseInt($scope.user_profile.section))[0];
-        $scope.cred = `${year_level.name} - ${section.name}`;
+        if(year_level == null || section == null){
+            $scope.cred = "";
+        }else{
+            $scope.cred = `${year_level.name} - ${section.name}`;
+        }
+        
         qrcode.makeCode($scope.code);
         console.log($scope.code);
         console.log();
