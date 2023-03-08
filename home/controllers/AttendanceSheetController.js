@@ -18,7 +18,6 @@
         $scope.sections = year_section.sections;
 
         let period = Authentication.getPeriods().filter(period => period.id === parseInt($scope.period_id))[0];
-        console.log({period:period});
         let named_period = Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects);
         $scope.period_name = `${named_period.subject} - ${named_period.year_level} ${named_period.section}`;
         $scope.start_date = new Date(DateUtil.dateToString(new Date));
@@ -30,16 +29,84 @@
         $scope.min_date = DateUtil.dateToString(new Date());
         $scope.max_date = DateUtil.dateToString(max_date);
         $scope.date_change = () => {
-            // console.log($scope.start_date.toString().slice(4,15));
             console.log("start_date:" + DateUtil.dateToString($scope.start_date));
-            // console.log(max_date);
-            // console.log(DateUtil.dateToString(max_date));
             console.log($scope.start_date);
             $scope.min_date = DateUtil.dateToString($scope.start_date);
             console.log("end_date: " + DateUtil.dateToString($scope.end_date));
-
-            
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // related periods
+        $scope.period_preview = $routeParams.period_to_copy != undefined;
+        $scope.period_to_copy = null;
+        // console.warn($scope.period_preview);
+        $scope.period_form = {};
+        $scope.related_periods = [];
+        $scope.related_period_names = [
+            {id:1, subject:"Math"},
+            {id:2, subject:"English"},
+            {id:3, subject:"Science"},
+        ];
+        $scope.period_to_copy_name = '';
+
+        $scope.goto_copy = () => {
+            console.log($scope.period_form.related_period);
+            $scope.init_period_to_copy();
+        }
+
+        //
+        $scope.init_period_to_copy = () => {
+            $scope.period_preview = true;
+            $scope.period_to_copy = $scope.period_form.related_period;
+            // get the selected period to copy
+            let pn = $scope.related_period_names.filter(period => period.id == $scope.period_to_copy)[0];
+            $scope.period_to_copy_name = `${pn.subject} - ${pn.year_level} ${pn.section}`;
+
+            Authentication.fetchRelatedAttendanceRecords(period.id, $scope.period_to_copy, $scope.succ, $scope.err);
+            // reset date form
+            $scope.start_date = new Date(DateUtil.dateToString(new Date));
+            $scope.end_date = new Date(DateUtil.dateToString(new Date));
+            $scope.start_date_str = DateUtil.dateToString($scope.start_date);
+            $scope.end_date_str = DateUtil.dateToString($scope.end_date);
+        }
+
+        // return to the period view
+        $scope.back_to_period = () => {
+            $scope.period_preview = false;
+            $scope.period_form.related_period = null;
+
+            Authentication.fetchAttendanceRecords($scope.period_id, $scope.start_date_str, $scope.end_date_str, $scope.succ, $scope.err);
+        }
+
+        /**
+         * fetch all the related periods
+         */
+        Authentication.fetchRelatedPeriods(res=>{
+            // exclude the current 
+            $scope.related_periods = res.data.filter(p => p.id != period.id);
+            $scope.related_period_names = $scope.related_periods.map(period=>Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects));
+            // console.error($scope.related_period_names);
+            // console.error($scope.related_periods);
+        }, res=>{
+            console.log(res);
+        }, period.id);
+
+        $scope.copy_attendance_record = () => {
+            let copy_attendance_succ = res => {
+                console.log(res);
+                $scope.back_to_period();
+            }
+
+            let copy_attendance_err = res => {
+                console.error(res);
+                $scope.back_to_period();
+            }
+            Authentication.copyRelatedAttendanceRecords(period.id, $scope.period_to_copy, copy_attendance_succ, copy_attendance_err);
+
+        }
+
+
+        // end of realtedperiods section
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $scope.succ = response => {
             // console.log(response.data);
@@ -67,12 +134,6 @@
             $scope.table_body = table_body;
             $scope.summary = summary;
         }
-        
-        $scope.checkify = (d) => {
-            if(parseInt(d)=== 1) return $sce.trustAsHtml("&#9989;");
-            return d;
-        }
-        $scope.check = $sce.trustAsHtml("&#9989;");
         function generateTableData(user_attendance, date_range, student_list){
             let table_header = [""];
             date_range.forEach(date => {

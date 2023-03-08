@@ -1,12 +1,13 @@
 <div class="card">
     <div class="card-header">
-        <h4>{{period_name}}</h4>
+        <h4 ng-if="!period_preview">{{period_name}}</h4>
+        <h4 ng-if="period_preview">Preview of {{period_to_copy_name}}</h4>
         <hr>
         <a class="btn btn-outline-success" href="#!/">Home</a>
-        <a class="btn btn-outline-success" ng-href="#!/home/qr-scanner/{{period_id}}" ng-if="!isAdmin">QR Scanner</a>
+        <a class="btn btn-outline-success" ng-href="#!/home/qr-scanner/{{period_id}}" ng-if="!isAdmin && !period_preview">QR Scanner</a>
     </div>
     <div class="card-body">
-        <form name="date_range" novalidate>
+        <form name="date_range" novalidate ng-show="!period_preview">
             <input type="date" name="start_date" ng-change="date_change()" ng-model="start_date" max="{{max_date}}">
             <input type="date" name="end_date" ng-change="date_change()" ng-model="end_date" min="{{min_date}}" max="{{max_date}}">
             <button ng-disabled="date_range.$invalid" class="btn btn-success" ng-click="fetch_records()">Submit</button>
@@ -15,6 +16,23 @@
         <div class="text-center">
             <h4>Attendance</h4>
             <h5>from {{start_date_str}} to {{end_date_str}}</h5>
+        </div>
+
+        <div class="alert alert-warning" ng-if="period_preview">
+            <div class="d-flex justify-content-center">
+                <p>Would you like to copy this attendance record?</p><br>
+            </div>
+            <div class="d-flex justify-content-center">
+                <p>Please note that the current record will be replaced with this record.</p><br>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="mx-2">
+                    <button class="btn btn-success" ng-click="copy_attendance_record()">Copy</button>
+                </div>
+                <div>
+                    <button class="btn btn-danger" ng-click="back_to_period()">Back</button>
+                </div>
+            </div>
         </div>
 
         <!-- <input type="text" name="" id="" value="{{t(i)}}"> -->
@@ -35,7 +53,18 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-primary" ng-click="export_to_excel('xlsx')">Download Excel</button>
+            <button class="btn btn-primary" ng-click="export_to_excel('xlsx')" ng-show="!period_preview">Download Excel</button>
+            <!-- <button class="btn btn-primary" ng-click="copy_attendance_record()" ng-show="period_preview">Copy Record</button> -->
+            <!-- <button class="btn btn-primary" ng-click="back_to_period()" ng-show="period_preview">Back</button> -->
+            <label ng-show="!period_preview && !isAdmin">Periods</label>
+            <select 
+                ng-show="!period_preview && !isAdmin"
+                ng-model="period_form.related_period"
+                ng-change="goto_copy()"
+                ng-options="period.id as period.subject for period in related_period_names"
+                required>
+                    <option value="">-- choose --</option>
+            </select>
         </div>
         
     </div>

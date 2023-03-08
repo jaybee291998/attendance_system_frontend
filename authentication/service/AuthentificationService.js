@@ -40,6 +40,7 @@
                 initSubjects: initSubjects,
                 createPeriod: createPeriod,
                 fetchPeriods: fetchPeriods,
+                fetchRelatedPeriods: fetchRelatedPeriods,
                 setPeriods: setPeriods,
                 getPeriods: getPeriods,
                 isPeriodSet: isPeriodSet,
@@ -48,6 +49,8 @@
                 period_to_named_period: period_to_named_period,
                 postAttendanceRecords: postAttendanceRecords,
                 fetchAttendanceRecords: fetchAttendanceRecords,
+                fetchRelatedAttendanceRecords: fetchRelatedAttendanceRecords,
+                copyRelatedAttendanceRecords: copyRelatedAttendanceRecords,
                 section_to_string: section_to_string,
                 isAdmin: isAdmin,
                 isInstructorOrAdminOrRedirect: isInstructorOrAdminOrRedirect,
@@ -330,6 +333,11 @@
                         .then(succ, err);
             }
 
+            function fetchRelatedPeriods(succ, err, period_pk){
+                return $http.get(`${myapi_link}/account/period-list/?period_pk=${period_pk}`)
+                        .then(succ, err);
+            }
+
             function setPeriods(periods){
                 setSession('periods', periods);
             }
@@ -371,6 +379,7 @@
                 let year_level_section =  selected_section.year_level;
                 let year_level_name = year_levels.filter(year_level => year_level.id === parseInt(year_level_section))[0].name;
                 let d = {
+                    id:period.id,
                     subject: subject_name,
                     year_level: year_level_name,
                     section: section_name
@@ -395,6 +404,15 @@
                     .then(succ, err);
             }
 
+            function fetchRelatedAttendanceRecords(period_id, period_to_copy_id, succ, err){
+                return $http.get(`${myapi_link}/attendance/attendance-records/${period_id}/?period_to_copy=${period_to_copy_id}`)
+                    .then(succ, err);
+            }
+
+            function copyRelatedAttendanceRecords(period_id, period_to_copy_id, succ, err){
+                return $http.put(`${myapi_link}/attendance/attendance-records/${period_id}/?period_to_copy=${period_to_copy_id}`)
+                    .then(succ, err);
+            }
             function fetchAllMembers(role, succ, err){
                 return $http.get(`${myapi_link}/account/get-all-members/?role=${role}`)
                     .then(succ, err);
