@@ -84,8 +84,8 @@
             // exclude the current 
             $scope.related_periods = res.data.filter(p => p.id != period.id);
             $scope.related_period_names = $scope.related_periods.map(period=>Authentication.period_to_named_period(period, $scope.year_levels, $scope.sections, $scope.subjects));
-            // console.error($scope.related_period_names);
-            // console.error($scope.related_periods);
+            console.error($scope.related_period_names);
+            console.error($scope.related_periods);
         }, res=>{
             console.log(res);
         }, period.id);

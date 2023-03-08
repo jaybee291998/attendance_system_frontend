@@ -52,6 +52,10 @@
                 controller: 'PeriodController',
                 templateUrl: 'home/pages/period.html'
             })
+            .when('/home/summary/:section_id',{
+                controller: 'SummaryController',
+                templateUrl: 'home/pages/summary.html'
+            })
             .when('/home/admin/',{
                 controller: 'AdminPanelController',
                 templateUrl: 'home/pages/admin-panel.html'

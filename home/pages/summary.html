@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Summary of {{header_name}}</h4>
+        <a class="btn btn-outline-success" href="#!/">Home</a>
+    </div>
+
+    <div class="card-body">
+        <form name="date_range" novalidate>
+            <input type="date" name="start_date" ng-change="date_change()" ng-model="start_date" max="{{max_date}}">
+            <button ng-disabled="date_range.$invalid" class="btn btn-success" ng-click="fetch_records()">Submit</button>
+        </form>
+        <hr>
+        <div class="text-center">
+            <h4>Attendance Summary</h4>
+            <h5>of {{start_date_str}}</h5>
+        </div>
+
+        <hr>
+        <div>
+            <table class="table table-bordered" id="tbl_exporttable_to_xls">
+                <thead>
+                    <tr>
+                        <th ng-repeat="header in table_headers" class="text-center">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="table_row in table_body">
+                        <td ng-repeat="data in table_row track by $index" class="text-center">{{data}} </td>
+                    </tr>
+                    <tr>
+                        <td ng-repeat="sum in summary track by $index" class="text-center">{{sum}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" ng-click="export_to_excel('xlsx')" ng-show="!period_preview">Download Excel</button>
+        </div>
+
+    </div>
+</div>

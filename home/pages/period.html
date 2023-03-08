@@ -5,6 +5,7 @@
     <div class="card-body">
         <div class="flex-container container">
             <my-period-card ng-repeat="period in named_periods" header="period.subject" subheader="period.year_level + ' - ' + period.section" my-link="'/home/attendance-sheet/'" id="period.id" body="period.instructor_name"></my-period-card>
+            <my-period-card header="'Summary'" subheader="" my-link="'/home/summary/'" id="section_id" body="'One Day Summary of this Section'"></my-period-card>
         </div>
     </div>
 </div>

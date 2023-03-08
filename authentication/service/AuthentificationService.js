@@ -51,6 +51,7 @@
                 fetchAttendanceRecords: fetchAttendanceRecords,
                 fetchRelatedAttendanceRecords: fetchRelatedAttendanceRecords,
                 copyRelatedAttendanceRecords: copyRelatedAttendanceRecords,
+                fetchSectionRecords: fetchSectionRecords,
                 section_to_string: section_to_string,
                 isAdmin: isAdmin,
                 isInstructorOrAdminOrRedirect: isInstructorOrAdminOrRedirect,
@@ -411,6 +412,11 @@
 
             function copyRelatedAttendanceRecords(period_id, period_to_copy_id, succ, err){
                 return $http.put(`${myapi_link}/attendance/attendance-records/${period_id}/?period_to_copy=${period_to_copy_id}`)
+                    .then(succ, err);
+            }
+
+            function fetchSectionRecords(section_id, date, succ, err){
+                return $http.get(`${myapi_link}/attendance/section-records/${section_id}?start_date=${date}`)
                     .then(succ, err);
             }
             function fetchAllMembers(role, succ, err){
