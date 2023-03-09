@@ -16,6 +16,27 @@
     <div ng-if="isAdmin" class="flex-container container">
       <my-period-card ng-repeat="year_level in year_levels" header="year_level.name" subheader="" my-link="'/home/sections/'" id="year_level.id"></my-period-card>
     </div>
+    <div ng-if="!isAdmin && !isInstructor">
+      <div>
+        <img src="images/authentication/ict_logo_transparent_sm.jpg" alt="ict logo" class="mx-3">
+        <img src="images/authentication/palaya_hs_logo_transparent_sm.jpg" alt="palayan hs logo" class="rounded float-left mx-4">
+    
+        <div class="text-center centered">
+            <h1 class="p1">Attendance Hub</h1>
+            <h3 class="p2">Students Daily Attendance System</h3>
+        </div>
+
+        <div class="text-center centered">
+          <h4 ng-if="random_quote.quote" class="q1"><q>{{random_quote.quote}}</q></h4>
+          <h4 ng-if="random_quote.author"> - {{random_quote.author}}</h4>
+        </div>
+    
+        <div class="text-center">
+            <h3 class="p3">by: SPICT group 1 reseacrhers</h3>
+        </div>
+        
+    </div>
+    </div>
     </div>
     <!-- <div>
         <button ng-click="vm.logout()" class="btn btn-danger">logout</button>

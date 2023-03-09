@@ -9,6 +9,10 @@
         function HomeController($scope, $location, Authentication){
             if(Authentication.authenticatedOrRedirect())return;
             console.log('INSIDE HOME CONTROLLER');
+            $scope.random_quote = {
+                "quote": null,
+                "author": null
+            };
             let vm = this;
             $scope.account = Authentication.getAuthenticatedAccount()['account_details']['email'];
             if(Authentication.isInstructor() || Authentication.isAdmin()){
@@ -67,9 +71,20 @@
                 console.log(id);
             }
 
+            $scope.get_random_quote = () => {
+                Authentication.getRandomQuote(res => {
+                    $scope.random_quote["quote"] = res.data.content;
+                    $scope.random_quote["author"] = res.data.author;
+                    console.log(res);
+                }, res => {
+                    console.error(res);
+                });
+            }
+
 
             if(Authentication.isSubjectSet()) console.log(Authentication.getSubjects());
 
             console.log(Authentication.getYearSection());
+            $scope.get_random_quote();
         }
 })();

@@ -66,7 +66,7 @@
                 postStatusRequest: postStatusRequest,
                 unsetSession: unsetSession,
                 unsetUserSession: unsetUserSession,
-
+                getRandomQuote: getRandomQuote,
             }
 
             return Authentication;
@@ -472,6 +472,11 @@
             function unsetUserSession(){
                 Authentication.unsetSession('periods');
 
+            }
+
+            function getRandomQuote(succ, err){
+                $http.get('https://api.quotable.io/random')
+                    .then(succ, err);
             }
         }
 })();
