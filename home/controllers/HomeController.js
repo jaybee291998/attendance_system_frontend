@@ -4,9 +4,9 @@
         .module('attendancehub.home.controllers')
         .controller('HomeController', HomeController);
 
-        HomeController.$inject = ['$scope', '$location', 'Authentication'];
+        HomeController.$inject = ['$scope', '$location', '$interval', 'Authentication'];
 
-        function HomeController($scope, $location, Authentication){
+        function HomeController($scope, $location, $interval, Authentication){
             if(Authentication.authenticatedOrRedirect())return;
             console.log('INSIDE HOME CONTROLLER');
             $scope.random_quote = {
@@ -80,6 +80,23 @@
                     console.error(res);
                 });
             }
+
+            let get_quote_interval = undefined;
+            if(!$scope.isAdmin && !$scope.isInstructor){
+                get_quote_interval = $interval($scope.get_random_quote, 30*1000);
+            }
+
+            let stop_quote_interval = () =>{
+                if(angular.isDefined(get_quote_interval)){
+                    $interval.cancel(get_quote_interval);
+                    get_quote_interval = undefined;
+                }
+            }
+
+            $scope.$on('$destroy', ()=>{
+                stop_quote_interval();
+            });
+
 
 
             if(Authentication.isSubjectSet()) console.log(Authentication.getSubjects());
