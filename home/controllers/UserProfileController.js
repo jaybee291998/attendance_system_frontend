@@ -45,7 +45,12 @@
                     console.log(response.data);
                     let last_request = response.data.at(-1);
                     // if(last_request.length === 0)
-                    if(last_request != null && last_request.status === 'P') $scope.show_pending_message = true;
+                    if(last_request != null && last_request.status === 'P'){
+                        $scope.show_pending_message = true;
+                        $scope.user.lrn = null;
+                        $scope.user.year_level = null;
+                        $scope.user.section = null;
+                    }
                     else{
                         $scope.show_request_instructorship = true;
                         $scope.show_request_head_teacher = true;
