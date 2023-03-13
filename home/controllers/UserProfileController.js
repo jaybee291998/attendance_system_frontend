@@ -47,6 +47,9 @@
                     // if(last_request.length === 0)
                     if(last_request != null && last_request.status === 'P'){
                         $scope.show_pending_message = true;
+                        // if there is a request then the lrn, school year and section is null
+                        // but the serializer needs these to have something even null so we need to
+                        // set this to null
                         $scope.user.lrn = null;
                         $scope.user.year_level = null;
                         $scope.user.section = null;
