@@ -176,16 +176,24 @@
         }
 
         function processRawInstructorship(raws){
-            return raws.map(raw => {
+           let processed = [];
+           let blanks = [];
+           for(let i = 0; i < raws.length;  i++){
+                let raw = raws[i];
                 let new_request = {};
-                new_request.id = raw.id;
                 let requestee = $scope.all_members.filter(m => m.user === raw.requestee)[0];
-                console.log(raw);
-                new_request.full_name = `${requestee.first_name} ${requestee.last_name}`;
-                new_request.requestee = requestee.user;
-                new_request.role = raw.role;
-                return new_request;
-            });
+                if(requestee){
+                    new_request.id = raw.id;
+                    new_request.full_name = `${requestee.first_name} ${requestee.last_name}`;
+                    new_request.requestee = requestee.user;
+                    new_request.role = raw.role;
+                    processed.push(new_request);
+                }else{
+                    blanks.push(raw);
+                }
+           }
+           if(blanks.length >= 1) console.log({blanks:blanks});
+           return processed;
         }
 
         $scope.test = (user_id, request_id, role) => {
