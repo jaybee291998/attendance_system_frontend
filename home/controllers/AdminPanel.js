@@ -148,8 +148,10 @@
             const succ = response => {
                 console.log("Instructorship Request:");
                 $scope.instructorship_requests_raw = response.data.filter(r => r.status == 'P' && r.role=='I');
-                $scope.instructorship_requests = processRawInstructorship($scope.instructorship_requests_raw);
                 $scope.head_teacher_requests_raw = response.data.filter(r => r.status == 'P' && r.role=='A');
+                console.log($scope.instructorship_requests_raw);
+                console.log($scope.head_teacher_requests_raw);
+                $scope.instructorship_requests = processRawInstructorship($scope.instructorship_requests_raw);
                 $scope.head_teacher_requests = processRawInstructorship($scope.head_teacher_requests_raw);
                 console.log($scope.instructorship_requests);
                 console.log($scope.instructorship_requests_raw);
@@ -178,6 +180,7 @@
                 let new_request = {};
                 new_request.id = raw.id;
                 let requestee = $scope.all_members.filter(m => m.user === raw.requestee)[0];
+                console.log(raw);
                 new_request.full_name = `${requestee.first_name} ${requestee.last_name}`;
                 new_request.requestee = requestee.user;
                 new_request.role = raw.role;
