@@ -47,8 +47,7 @@ This project is a web application that automates the attendance gathering proces
 
 ## Contributors
 
-- John Doe (@johndoe)
-- Jane Smith (@janesmith)
+- Jayvee Ascano
 
 ## License
 
