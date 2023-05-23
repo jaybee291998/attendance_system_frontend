@@ -1,7 +1,8 @@
 # QR Code Attendance System
 
 This project is a web application that automates the attendance gathering process in the classroom using QR codes. The instructor of the section can generate a table of attendance for a certain date range, which can then be downloaded as an Excel file. The admin can view all the students, instructors, and admins, and users can request to be an instructor or an admin. The admin can accept or reject these requests. The admin also has access to all the school's classes and can view all the attendance sheets.
-
+## Link
+[Attendance Hub](https://gleaming-queijadas-fca33f.netlify.app/#!/ict)
 ## Features
 
 - QR code-based attendance gathering
