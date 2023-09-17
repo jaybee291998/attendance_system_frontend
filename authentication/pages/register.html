@@ -5,6 +5,10 @@
     <div ng-message='minlength' class='text-danger'>Too short</div>
     <div ng-message='maxlength' class='text-danger'>Too long</div>
   </script>
+  <script type="text/ng-template" id="error-messages2">
+    <div ng-message='pattern' class='text-danger'>Please enter a valid phone number.</div>
+    <div ng-message='required' class='text-danger'>This field is required</div>
+  </script>
     <div class="card">
 	    <div class="card-header">
 	        <h5 class="card-title">Registration</h5>
@@ -121,7 +125,7 @@
                       ng-pattern="/^\d{11}$/"
                        required>
                       <div ng-messages="registerForm.register__phone.$dirty && registerForm.register__phone.$error">
-                        <div ng-messages-include="error-messages"></div>
+                        <div ng-messages-include="error-messages2"></div>
                       </div>
                     </div>
                 </div>
