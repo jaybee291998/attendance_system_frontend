@@ -1,6 +1,6 @@
 <div class="pl-10 pl-10">
   <script type="text/ng-template" id="error-messages">
-    <div ng-message='pattern' class='text-danger'>Please enter a valid phone number/LRN</div>
+    <div ng-message='pattern' class='text-danger'>Please enter a valid phone LRN</div>
     <div ng-message='required' class='text-danger'>This field is required</div>
     <div ng-message='minlength' class='text-danger'>Too short</div>
     <div ng-message='maxlength' class='text-danger'>Too long</div>
@@ -15,7 +15,7 @@
           <div ng-show="message" ng-bind="message" class="alert alert-warn">{{message | json}}</div>
             <form name="registerForm" novalidate>
                 <div class="form-group row mb-2">
-                  <label for="register__email" class="col-sm-2 col-form-label">Email</label>
+                  <!-- <label for="register__email" class="col-sm-2 col-form-label">Email</label> -->
                   <div class="col-sm-10">
                     <input type="email" class="form-control" name="register__email" placeholder="Email" 
                     ng-model="vm.email"
@@ -24,7 +24,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                  <label for="register__password" class="col-sm-2 col-form-label">Password</label>
+                  <!-- <label for="register__password" class="col-sm-2 col-form-label">Password</label> -->
                   <div class="col-sm-10">
                     <input type="password" class="form-control" name="register__password" placeholder="Password" 
                     ng-model="vm.password"
@@ -37,7 +37,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                    <label for="register__confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <!-- <label for="register__confirm_password" class="col-sm-2 col-form-label">Confirm Password</label> -->
                     <div class="col-sm-10">
                       <input type="password" class="form-control" name="register__confirm_password" placeholder="Confirm Password"  
                       ng-model="vm.confirmPassword"
@@ -50,7 +50,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                    <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label>
+                    <!-- <label for="register__first_name" class="col-sm-2 col-form-label">First Name</label> -->
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__first_name" placeholder="first name" 
                       ng-model="user.first_name" 
@@ -63,7 +63,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                    <label for="register__last_name" class="col-sm-2 col-form-label">Last Name</label>
+                    <!-- <label for="register__last_name" class="col-sm-2 col-form-label">Last Name</label> -->
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__last_name" placeholder="last name" 
                       ng-model="user.last_name" 
@@ -76,7 +76,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                    <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label>
+                    <!-- <label for="register__middle_name" class="col-sm-2 col-form-label" required>Middle Name</label> -->
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__middle_name" placeholder="middle name" 
                       ng-model="user.middle_name" 
@@ -91,7 +91,7 @@
                 <div class="form-group row mb-2">
                     <label for="register__age" class="col-sm-2 col-form-label">Age</label>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" name="register__age" placeholder="age" 
+                      <!-- <input type="number" class="form-control" name="register__age" placeholder="age"  -->
                       ng-model="user.age" 
                       required>
                       <div ng-messages="registerForm.register__age.$dirty && registerForm.register__age.$error">
@@ -101,7 +101,7 @@
                 </div>
     
                 <div class="form-group row mb-2">
-                    <label for="register__address" class="col-sm-2 col-form-label">Address</label>
+                    <!-- <label for="register__address" class="col-sm-2 col-form-label">Address</label> -->
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__address" placeholder="address" 
                       ng-model="user.address"
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="form-group row mb-2">
-                    <label for="register__phone" class="col-sm-2 col-form-label">Phone</label>
+                    <!-- <label for="register__phone" class="col-sm-2 col-form-label">Phone</label> -->
                     <div class="col-sm-10">
                       <input type="text" class="form-control" name="register__phone" placeholder="phone" 
                       ng-model="user.phone"
@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <div class="form-group row mb-2" ng-if="!dis">
-                  <label for="register__lrn" class="col-sm-2 col-form-label">LRN</label>
+                  <!-- <label for="register__lrn" class="col-sm-2 col-form-label">LRN</label> -->
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="register__lrn" placeholder="LRN" 
                     ng-model="user.lrn"
